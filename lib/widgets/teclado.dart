@@ -101,7 +101,7 @@ class Teclado extends ConsumerWidget {
                 throw Error();
               }*/
               //String resultado = item.substring(item.indexOf('=') + 1);
-              String ecuacion = item;
+              String ecuacion = item.replaceAll(',', '.');
               if (item.contains('=')) {
                 ecuacion = item.substring(0, item.indexOf('='));
               }
@@ -137,11 +137,21 @@ class Teclado extends ConsumerWidget {
           //state = Decimal.parse(state).toString();
         },
       };
+
+      IconData? icon;
+      if (bF == BotonFuncion.copiar) {
+        icon = Icons.content_copy;
+      }
+      if (bF == BotonFuncion.pegar) {
+        icon = Icons.content_paste;
+      }
+
       return Boton(
         botonText: bF.simbolo,
         textColor: bF.textColor,
         botonColor: bF.botonColor,
         botonTap: () => funcion(),
+        icon: icon,
       );
     }
 
@@ -203,8 +213,10 @@ class Teclado extends ConsumerWidget {
               buildBotonFuncion(BotonFuncion.deshacer),
               const SizedBox(width: 10),
               buildBotonFuncion(BotonFuncion.copiar),
+              //Icon(Icons.copy),
               const SizedBox(width: 10),
               buildBotonFuncion(BotonFuncion.pegar),
+              //Icon(Icons.paste),
               const SizedBox(width: 10),
               buildBotonFuncion(BotonFuncion.redondeo),
             ],

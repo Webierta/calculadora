@@ -18,6 +18,14 @@ class HelpScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
+                  'Precisión',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  'El resultado se expresa con una precisión de 16 dígitos.',
+                ),
+                const SizedBox(height: 20),
+                Text(
                   'Secuencia de operadores. Jerarquía detallada',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),

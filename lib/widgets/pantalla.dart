@@ -34,7 +34,6 @@ class _PantallaState extends ConsumerState<Pantalla> {
     ecuacionController.text = pantallaEcuacion;
 
     return Container(
-      //padding: .symmetric(horizontal: 10, vertical: 10),
       padding: .symmetric(horizontal: 10),
       color: Color(0xff22252D),
       child: Column(
@@ -47,7 +46,7 @@ class _PantallaState extends ConsumerState<Pantalla> {
               style: TextStyle(
                 fontFamily: 'ShareTechMono',
                 fontWeight: FontWeight.bold,
-                fontSize: 38.0,
+                fontSize: 40.0,
                 color: pantallaResultado == 'Error' ? Colors.red : Colors.white,
               ),
               pantallaResultado,

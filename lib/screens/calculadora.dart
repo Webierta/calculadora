@@ -29,7 +29,7 @@ class Calculadora extends StatelessWidget {
                 ),
               );
             },
-            icon: Icon(Icons.paste),
+            icon: Icon(Icons.content_paste_search),
           ),
           const SizedBox(width: 10),
           IconButton(

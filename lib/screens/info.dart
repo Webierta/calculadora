@@ -16,17 +16,28 @@ class InfoScreen extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                AboutDialog(
-                  applicationName: 'Calculadora',
-                  applicationVersion: '0.1',
-                  //applicationLegalese: 'GNU v3.0',
-                  applicationIcon: Icon(Icons.calculate_outlined, size: 150),
-                  children: [
-                    Text('Open Source by Webierta'),
-                    //Icon(Icons.code),
-                    Text('https://github.com/Webierta/calculadora'),
-                    Text('GNU General Public License v3.0'),
-                  ],
+                FittedBox(
+                  child: const AboutDialog(
+                    applicationName: 'Calculadora',
+                    applicationVersion: '0.1\nby Webierta',
+                    applicationLegalese: 'Licencia GPLv3',
+                    applicationIcon: Icon(Icons.calculate_outlined, size: 200),
+                    children: [
+                      Text('Open Source. Copyleft 2025-2026'),
+                      //Icon(Icons.code),
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Icon(Icons.code),
+                          Text(' in github.com/Webierta/calculadora'),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Text('GNU General Public License v3.0'),
+                      SizedBox(height: 10),
+                      Text('All Wrongs Reserved.'),
+                    ],
+                  ),
                 ),
               ],
             ),

@@ -5,6 +5,7 @@ class Boton extends StatelessWidget {
   final Color textColor;
   final Color botonColor;
   final Function() botonTap;
+  final IconData? icon;
 
   const Boton({
     super.key,
@@ -12,6 +13,7 @@ class Boton extends StatelessWidget {
     required this.textColor,
     required this.botonColor,
     required this.botonTap,
+    this.icon,
   });
 
   @override
@@ -33,13 +35,15 @@ class Boton extends StatelessWidget {
         ),
         child: FittedBox(
           fit: BoxFit.scaleDown,
-          child: Text(
-            botonText,
-            style: TextStyle(
-              fontSize: botonText == '=' ? 80 : 24,
-              color: textColor,
-            ),
-          ),
+          child: icon != null
+              ? Icon(icon, size: 30, color: textColor)
+              : Text(
+                  botonText,
+                  style: TextStyle(
+                    fontSize: botonText == '=' ? 80 : 24,
+                    color: textColor,
+                  ),
+                ),
         ),
       ),
     );
