@@ -20,7 +20,7 @@ class Boton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: botonText == '=' ? 190 : 90,
-      height: botonText == '=' ? 150 : 70,
+      height: botonText == '=' ? 70 : 70, // 150 : 70
       //width: botonText == '=' ? 100 : 45,
       //height: botonText == '=' ? 75 : 35,
       padding: const EdgeInsets.all(0),

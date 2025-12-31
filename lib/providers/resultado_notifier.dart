@@ -38,7 +38,8 @@ class ResultadoNotifier extends Notifier<String> {
       String input = pantallaEcuacion
           .replaceAll('x', '*')
           .replaceAll('÷', '/')
-          .replaceAll('%', '/ 100 *')
+          .replaceAll('％', '/ 100 *')
+          .replaceAll('mod', '%')
           .replaceAll('√', 'sqrt');
 
       ShuntingYardParser p = ShuntingYardParser();

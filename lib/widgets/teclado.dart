@@ -25,7 +25,8 @@ class Teclado extends ConsumerWidget {
         String input = eq
             .replaceAll('x', '*')
             .replaceAll('÷', '/')
-            .replaceAll('%', '/ 100 *')
+            .replaceAll('％', '/ 100 *')
+            .replaceAll('mod', '%')
             .replaceAll('√', 'sqrt');
         ShuntingYardParser p = ShuntingYardParser();
         //ExpressionParser p = GrammarParser();
@@ -44,6 +45,7 @@ class Teclado extends ConsumerWidget {
     }
 
     Boton buildBotonOperacion(BotonOperacion bOp) {
+      //String simbolo = bOp == BotonOperacion.modulo ? '%' : bOp.simbolo;
       return Boton(
         botonText: bOp.simbolo,
         textColor: bOp.textColor,
@@ -228,8 +230,9 @@ class Teclado extends ConsumerWidget {
               ...buildBotonesNumber(7),
               const SizedBox(width: 10),
               buildBotonOperacion(BotonOperacion.porcentaje),
+              //buildBotonOperacion(BotonOperacion.modulo),
               const SizedBox(width: 10),
-              buildBotonOperacion(BotonOperacion.factorial),
+              buildBotonOperacion(BotonOperacion.modulo),
             ],
           ),
           const SizedBox(height: 10),
@@ -238,7 +241,7 @@ class Teclado extends ConsumerWidget {
             children: [
               ...buildBotonesNumber(4),
               const SizedBox(width: 10),
-              buildBotonOperacion(BotonOperacion.raiz),
+              buildBotonOperacion(BotonOperacion.cuadrado),
               const SizedBox(width: 10),
               buildBotonOperacion(BotonOperacion.exponente),
             ],
@@ -249,9 +252,9 @@ class Teclado extends ConsumerWidget {
             children: [
               ...buildBotonesNumber(1),
               const SizedBox(width: 10),
-              buildBotonOperacion(BotonOperacion.dividir),
+              buildBotonOperacion(BotonOperacion.raiz),
               const SizedBox(width: 10),
-              buildBotonOperacion(BotonOperacion.multiplicar),
+              buildBotonOperacion(BotonOperacion.factorial),
             ],
           ),
           const SizedBox(height: 10),
@@ -264,6 +267,21 @@ class Teclado extends ConsumerWidget {
               const SizedBox(width: 10),
               buildBotonCaracter(BotonCaracter.parentesisOff),
               const SizedBox(width: 10),
+              buildBotonOperacion(BotonOperacion.dividir),
+              const SizedBox(width: 10),
+              buildBotonOperacion(BotonOperacion.multiplicar),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              buildBotonCaracter(BotonCaracter.corcheteOn),
+              const SizedBox(width: 10),
+              buildBotonCaracter(BotonCaracter.decimal),
+              const SizedBox(width: 10),
+              buildBotonCaracter(BotonCaracter.corcheteOff),
+              const SizedBox(width: 10),
               buildBotonOperacion(BotonOperacion.restar),
               const SizedBox(width: 10),
               buildBotonOperacion(BotonOperacion.sumar),
@@ -271,6 +289,27 @@ class Teclado extends ConsumerWidget {
           ),
           const SizedBox(height: 10),
           Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              buildBotonConstante(BotonConstante.pi),
+              const SizedBox(width: 10),
+              buildBotonConstante(BotonConstante.e),
+              const SizedBox(width: 10),
+              buildBotonConstante(BotonConstante.sqrt2),
+              const SizedBox(width: 10),
+              Boton(
+                botonText: BotonOperacion.igual.simbolo,
+                textColor: Colors.white,
+                botonColor: Color(0xffE78388),
+                botonTap: () {
+                  ref
+                      .read(resultadoProvider.notifier)
+                      .calcular(pantallaEcuacion);
+                },
+              ),
+            ],
+          ),
+          /*Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Column(
@@ -283,6 +322,10 @@ class Teclado extends ConsumerWidget {
                       buildBotonCaracter(BotonCaracter.decimal),
                       const SizedBox(width: 10),
                       buildBotonCaracter(BotonCaracter.corcheteOff),
+                      const SizedBox(width: 10),
+                      buildBotonOperacion(BotonOperacion.restar),
+                      const SizedBox(width: 10),
+                      buildBotonOperacion(BotonOperacion.sumar),
                     ],
                   ),
                   const SizedBox(height: 10),
@@ -310,7 +353,7 @@ class Teclado extends ConsumerWidget {
                 },
               ),
             ],
-          ),
+          ),*/
         ],
       ),
     );

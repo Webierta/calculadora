@@ -22,9 +22,11 @@ enum BotonOperacion {
   restar(simbolo: '-'),
   multiplicar(simbolo: 'x'),
   dividir(simbolo: '÷'),
-  porcentaje(simbolo: '%'),
+  porcentaje(simbolo: '％'),
+  modulo(simbolo: 'mod'),
   raiz(simbolo: '√'),
   exponente(simbolo: '^'),
+  cuadrado(simbolo: '^2'),
   factorial(simbolo: '!'),
   igual(simbolo: '=');
 
