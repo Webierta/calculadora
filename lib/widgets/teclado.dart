@@ -97,11 +97,15 @@ class Teclado extends ConsumerWidget {
             ClipboardData? data = await Clipboard.getData('text/plain');
             if (data != null) {
               var item = '${data.text}';
-              if (!item.contains('=')) {
+              /*if (!item.contains('=')) {
                 throw Error();
-              }
+              }*/
               //String resultado = item.substring(item.indexOf('=') + 1);
-              String ecuacion = item.substring(0, item.indexOf('='));
+              String ecuacion = item;
+              if (item.contains('=')) {
+                ecuacion = item.substring(0, item.indexOf('='));
+              }
+
               if (isEcuacion(ecuacion)) {
                 ref.read(ecuacionProvider.notifier).add(ecuacion);
               } else {

@@ -38,7 +38,11 @@ class MainApp extends StatelessWidget {
     final virtualWindowFrameBuilder = VirtualWindowFrameInit();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(useMaterial3: true, brightness: Brightness.dark),
+      theme: ThemeData(
+        useMaterial3: true,
+        brightness: Brightness.dark,
+        fontFamily: 'RobotoMono',
+      ),
       builder: (context, child) {
         child = virtualWindowFrameBuilder(context, child);
         return child;

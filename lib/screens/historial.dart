@@ -69,7 +69,10 @@ class _HistorialState extends State<Historial> {
                       title: FittedBox(
                         fit: BoxFit.scaleDown,
                         alignment: AlignmentGeometry.centerLeft,
-                        child: Text(resultado),
+                        child: Text(
+                          resultado,
+                          style: TextStyle(fontFamily: 'ShareTechMono'),
+                        ),
                       ),
                       subtitle: Text(ecuacion),
                       trailing: Row(

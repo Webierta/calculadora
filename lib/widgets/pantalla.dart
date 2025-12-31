@@ -45,6 +45,7 @@ class _PantallaState extends ConsumerState<Pantalla> {
             child: Text(
               textAlign: TextAlign.right,
               style: TextStyle(
+                fontFamily: 'ShareTechMono',
                 fontWeight: FontWeight.bold,
                 fontSize: 38.0,
                 color: pantallaResultado == 'Error' ? Colors.red : Colors.white,
