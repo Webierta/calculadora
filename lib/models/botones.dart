@@ -44,9 +44,10 @@ enum BotonCaracter {
   parentesisOn(simbolo: '('),
   parentesisOff(simbolo: ')'),
   corcheteOn(simbolo: '{'),
-  corcheteOff(simbolo: '}'),
-  cambioSigno(simbolo: '±'),
-  dobleCero(simbolo: '00');
+  corcheteOff(simbolo: '}')
+  //cambioSigno(simbolo: '±'),
+  //dobleCero(simbolo: '00')
+  ;
 
   final String simbolo;
 

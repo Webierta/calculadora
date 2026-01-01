@@ -19,17 +19,29 @@ class HelpScreen extends StatelessWidget {
               children: [
                 Text(
                   'Precisión',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueAccent,
+                  ),
                 ),
                 Text(
-                  'El resultado se expresa con una precisión de 16 dígitos.',
+                  'Los números se manejan como valores dobles regulares que son '
+                  'números de punto flotante de doble precisión de 64 bits como '
+                  'se especifica en el Estándar IEEE 754. '
+                  'Aproximadamente ofrecen hasta 15 dígitos de precisión.',
                 ),
+                const SizedBox(height: 10),
+                Text('El resultado se expresa con un máximo de 5 decimales.'),
                 const SizedBox(height: 20),
                 Text(
                   'Secuencia de operadores. Jerarquía detallada',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueAccent,
+                  ),
                 ),
-                const SizedBox(height: 10),
                 Text(
                   '''1. Paréntesis y Signos de Agrupación (Paréntesis, Llaves): Resuelve primero lo que esté dentro de ellos.
 
@@ -50,7 +62,11 @@ class HelpScreen extends StatelessWidget {
                 const SizedBox(height: 20),
                 Text(
                   'Ecuación de Raíz cuadrada',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueAccent,
+                  ),
                 ),
                 Text(
                   'El radicando debe preceder al símbolo raíz. Ejemplo para calcular la raíz cuadrada de 49:',
@@ -60,7 +76,11 @@ class HelpScreen extends StatelessWidget {
                 const SizedBox(height: 20),
                 Text(
                   'Ecuación de porcentaje',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueAccent,
+                  ),
                 ),
                 Text('Ejemplo para calcular el 50% de 30:'),
                 const SizedBox(height: 10),

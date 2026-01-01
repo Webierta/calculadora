@@ -1,13 +1,14 @@
 name: calculadora
 description: "Calculadora simple para operaciones aritméticas"
 publish_to: 'none'
-version: 1.0.0+1
+version: 1.0.1+2
 
 environment:
   sdk: ^3.10.4
 
 dependencies:
   decimal: ^3.2.4
+  fixnum: ^1.1.1
   flutter:
     sdk: flutter
   flutter_launcher_icons: ^0.14.4

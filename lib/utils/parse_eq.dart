@@ -21,8 +21,15 @@ class ParseEq {
       Expression exp = p.parse(output);
       ContextModel cm = ContextModel();
       var eval = RealEvaluator(cm).evaluate(exp);
+
       //state = eval.toString();
-      String resultado = eval.toStringAsPrecision(16);
+      //String resultado = eval.toStringAsPrecision(16);
+      //resultado = Decimal.parse(resultado).toString();
+
+      String resultRounded = eval.toStringAsFixed(5);
+      resultRounded = Decimal.parse(resultRounded).toString();
+      double resultRoundedAsDouble = double.parse(resultRounded);
+      String resultado = resultRoundedAsDouble.toString();
       resultado = Decimal.parse(resultado).toString();
       /*if (state.endsWith('.0')) {
         state = state.substring(0, state.length - 2);
