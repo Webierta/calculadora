@@ -18,11 +18,11 @@ class Calculadora extends StatelessWidget {
     ]);
     return Scaffold(
       appBar: AppBar(
-        //leading: Icon(Icons.calculate, size: 40),
         title: Text('Calculadora'),
         actions: [
           IconButton(
             onPressed: () {
+              ScaffoldMessenger.of(context).removeCurrentSnackBar();
               Navigator.of(context).push(
                 MaterialPageRoute<void>(
                   builder: (context) => const Historial(),
@@ -34,6 +34,7 @@ class Calculadora extends StatelessWidget {
           const SizedBox(width: 10),
           IconButton(
             onPressed: () {
+              ScaffoldMessenger.of(context).removeCurrentSnackBar();
               Navigator.of(context).push(
                 MaterialPageRoute<void>(
                   builder: (context) => const HelpScreen(),
@@ -45,6 +46,7 @@ class Calculadora extends StatelessWidget {
           const SizedBox(width: 10),
           IconButton(
             onPressed: () {
+              ScaffoldMessenger.of(context).removeCurrentSnackBar();
               Navigator.of(context).push(
                 MaterialPageRoute<void>(
                   builder: (context) => const InfoScreen(),

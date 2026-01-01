@@ -1,14 +1,13 @@
 import 'dart:math' as math;
 
-import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:math_expressions/math_expressions.dart';
 
 import '../models/botones.dart';
 import '../providers/ecuacion_notifier.dart';
 import '../providers/resultado_notifier.dart';
+import '../utils/parse_eq.dart';
 import '../utils/portapapeles.dart';
 import 'boton.dart';
 
@@ -19,30 +18,6 @@ class Teclado extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final pantallaEcuacion = ref.watch(ecuacionProvider);
     final pantallaResultado = ref.watch(resultadoProvider);
-
-    bool isEcuacion(String eq) {
-      try {
-        String input = eq
-            .replaceAll('x', '*')
-            .replaceAll('÷', '/')
-            .replaceAll('％', '/ 100 *')
-            .replaceAll('mod', '%')
-            .replaceAll('√', 'sqrt');
-        ShuntingYardParser p = ShuntingYardParser();
-        //ExpressionParser p = GrammarParser();
-        Expression exp = p.parse(input);
-        ContextModel cm = ContextModel();
-        var eval = RealEvaluator(cm).evaluate(exp);
-        var resultado = eval.toStringAsPrecision(15);
-        resultado = Decimal.parse(resultado).toString();
-        if (resultado == 'NaN') {
-          throw Error();
-        }
-        return true;
-      } catch (e) {
-        return false;
-      }
-    }
 
     Boton buildBotonOperacion(BotonOperacion bOp) {
       //String simbolo = bOp == BotonOperacion.modulo ? '%' : bOp.simbolo;
@@ -108,7 +83,7 @@ class Teclado extends ConsumerWidget {
                 ecuacion = item.substring(0, item.indexOf('='));
               }
 
-              if (isEcuacion(ecuacion)) {
+              if (ParseEq.isEcuacion(ecuacion)) {
                 ref.read(ecuacionProvider.notifier).add(ecuacion);
               } else {
                 throw Error();
@@ -309,51 +284,6 @@ class Teclado extends ConsumerWidget {
               ),
             ],
           ),
-          /*Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Column(
-                children: [
-                  Row(
-                    //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      buildBotonCaracter(BotonCaracter.corcheteOn),
-                      const SizedBox(width: 10),
-                      buildBotonCaracter(BotonCaracter.decimal),
-                      const SizedBox(width: 10),
-                      buildBotonCaracter(BotonCaracter.corcheteOff),
-                      const SizedBox(width: 10),
-                      buildBotonOperacion(BotonOperacion.restar),
-                      const SizedBox(width: 10),
-                      buildBotonOperacion(BotonOperacion.sumar),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      buildBotonConstante(BotonConstante.pi),
-                      const SizedBox(width: 10),
-                      buildBotonConstante(BotonConstante.e),
-                      const SizedBox(width: 10),
-                      buildBotonConstante(BotonConstante.sqrt2),
-                    ],
-                  ),
-                ],
-              ),
-              const SizedBox(width: 10),
-              Boton(
-                botonText: BotonOperacion.igual.simbolo,
-                textColor: Colors.white,
-                botonColor: Color(0xffE78388),
-                botonTap: () {
-                  ref
-                      .read(resultadoProvider.notifier)
-                      .calcular(pantallaEcuacion);
-                },
-              ),
-            ],
-          ),*/
         ],
       ),
     );

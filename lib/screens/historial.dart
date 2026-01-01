@@ -29,7 +29,6 @@ class _HistorialState extends State<Historial> {
   Widget build(BuildContext context) {
     void copyItem(String item) async {
       await Clipboard.setData(ClipboardData(text: item));
-      //showMsg(msg: 'BTC Address copied to Clipboard');
     }
 
     return Scaffold(

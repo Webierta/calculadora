@@ -64,7 +64,7 @@ class HelpScreen extends StatelessWidget {
                 ),
                 Text('Ejemplo para calcular el 50% de 30:'),
                 const SizedBox(height: 10),
-                Text('50%30 = 15'),
+                Text('50％30 = 15'),
               ],
             ),
           ),

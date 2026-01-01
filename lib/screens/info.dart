@@ -24,7 +24,6 @@ class InfoScreen extends StatelessWidget {
                     applicationIcon: Icon(Icons.calculate_outlined, size: 200),
                     children: [
                       Text('Open Source. Copyleft 2025-2026'),
-                      //Icon(Icons.code),
                       SizedBox(height: 10),
                       Row(
                         children: [
