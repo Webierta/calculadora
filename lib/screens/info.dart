@@ -19,7 +19,7 @@ class InfoScreen extends StatelessWidget {
                 FittedBox(
                   child: const AboutDialog(
                     applicationName: 'Calculadora',
-                    applicationVersion: '0.1\nby Webierta',
+                    applicationVersion: '1.0.0\nby Webierta',
                     applicationLegalese: 'Licencia GPLv3',
                     applicationIcon: Icon(Icons.calculate_outlined, size: 200),
                     children: [
