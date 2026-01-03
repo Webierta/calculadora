@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../widgets/pantalla.dart';
-import '../widgets/teclado.dart';
+import '../widgets/display/display_pad.dart';
+import '../widgets/keyboard/key_pad.dart';
+import 'clipboard_screen.dart';
 import 'help.dart';
-import 'historial.dart';
 import 'info.dart';
 
 class Calculadora extends StatelessWidget {
@@ -20,6 +20,7 @@ class Calculadora extends StatelessWidget {
       canPop: false,
       onPopInvokedWithResult: (bool didPop, Object? result) {},
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           title: Text('Calculadora'),
@@ -29,7 +30,7 @@ class Calculadora extends StatelessWidget {
                 ScaffoldMessenger.of(context).removeCurrentSnackBar();
                 Navigator.of(context).push(
                   MaterialPageRoute<void>(
-                    builder: (context) => const Historial(),
+                    builder: (context) => const ClipboardScreen(),
                   ),
                 );
               },
@@ -63,15 +64,17 @@ class Calculadora extends StatelessWidget {
           ],
         ),
         body: SafeArea(
+          // Container color: Color(0xff292D36),
           child: Container(
             color: Color(0xff292D36),
-            //padding: .all(20),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Expanded(child: const Pantalla()),
+                Expanded(child: const DisplayPad()),
                 //const SizedBox(height: 20),
-                FittedBox(child: const Teclado()),
+                //FittedBox(child: const Teclado()),
+                Expanded(child: const KeyPad()),
               ],
             ),
           ),

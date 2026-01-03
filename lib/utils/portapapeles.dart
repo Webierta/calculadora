@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../widgets/display/historial.dart';
 
 class SharedPrefs {
   static SharedPreferences? _sharedPrefs;
@@ -7,26 +11,35 @@ class SharedPrefs {
     _sharedPrefs ??= await SharedPreferences.getInstance();
   }
 
-  List<String> get items => _sharedPrefs?.getStringList('items') ?? [];
+  List<String> get clipboard => _sharedPrefs?.getStringList('clipboard') ?? [];
 
-  set items(List<String> lista) => _sharedPrefs?.setStringList('items', lista);
-
-  void addItem(String value) {
-    List<String> lista = items;
-    lista.add(value);
-    items = lista;
-    //_sharedPrefs?.setStringList('items', lista);
+  set clipboard(List<String> lista) {
+    _sharedPrefs?.setStringList('clipboard', lista);
   }
 
-  void removeItem(int index) {
-    List<String> lista = items;
+  List<Historial> getHistory() {
+    List<Historial> lista = [];
+    for (var item in clipboard) {
+      final json = jsonDecode(item);
+      lista.add(Historial.fromJson(json));
+    }
+    return lista;
+  }
+
+  void saveHistory(Historial value) async {
+    List<String> lista = clipboard;
+    String jsonString = jsonEncode(value);
+    lista.add(jsonString);
+    clipboard = lista;
+  }
+
+  void removeHistory(int index) {
+    List<String> lista = clipboard;
     lista.removeAt(index);
-    items = lista;
-    //_sharedPrefs?.setStringList('items', lista);
+    clipboard = lista;
   }
 
-  void clearAll() {
-    items = [];
-    //_sharedPrefs?.setStringList('items', []);
+  void clearClipboard() {
+    clipboard = [];
   }
 }

@@ -35,6 +35,7 @@ class ResultadoNotifier extends Notifier<String> {
       state = '';
       return;
     }
+    //state = ParseEq.evaluar(pantallaEcuacion);
     state = ParseEq.evaluar(pantallaEcuacion);
   }
 }

@@ -1,0 +1,245 @@
+import 'package:calculadora/providers/ecuacion_notifier.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../providers/historial_notifier.dart';
+import '../providers/resultado_notifier.dart';
+import '../utils/portapapeles.dart';
+import '../widgets/display/historial.dart';
+
+class ClipboardScreen extends ConsumerStatefulWidget {
+  const ClipboardScreen({super.key});
+
+  @override
+  ConsumerState<ClipboardScreen> createState() => _ClipboardScreenState();
+}
+
+class _ClipboardScreenState extends ConsumerState<ClipboardScreen> {
+  final SharedPrefs sharedPrefs = SharedPrefs();
+
+  //List<String> items = [];
+
+  List<Historial> clipboard = [];
+
+  @override
+  void initState() {
+    _loadItems();
+    super.initState();
+  }
+
+  Future<void> _loadItems() async {
+    await sharedPrefs.init();
+    //setState(() => items = sharedPrefs.items);
+    setState(() {
+      //clipboard = sharedPrefs.clipboard;
+      clipboard = sharedPrefs.getHistory();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    /*void copyItem(String item) async {
+      await Clipboard.setData(ClipboardData(text: item));
+    }*/
+
+    /*void save(Historial value) async {
+      await Clipboard.setData(ClipboardData(text: json.encode(value)));
+    }*/
+
+    void save(Historial hist) async {
+      await Clipboard.setData(ClipboardData(text: hist.toString()));
+    }
+
+    void paste(String ecuacion) {
+      // limpiar pantalla resultado
+      ref.read(resultadoProvider.notifier).clear();
+      // limpiar pantalla ecuacion
+      ref.read(ecuacionProvider.notifier).clear();
+      // set pantalla ecuacion = ecuacion
+      ref.read(ecuacionProvider.notifier).add(ecuacion);
+      // ir a calculadora page
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
+      Navigator.of(context).pop();
+      // calcula
+      ref.read(resultadoProvider.notifier).calcular(ecuacion);
+      var resultado = ref.watch(resultadoProvider);
+      ref
+          .read(historialProvider.notifier)
+          .add(Historial(input: ecuacion, result: resultado));
+    }
+
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (bool didPop, Object? result) {
+        ScaffoldMessenger.of(context).removeCurrentSnackBar();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: IconButton(
+            onPressed: () {
+              ScaffoldMessenger.of(context).removeCurrentSnackBar();
+              Navigator.of(context).pop();
+            },
+            icon: Icon(Icons.arrow_back),
+          ),
+          title: Text('Clipboard'),
+          actions: [
+            IconButton(
+              onPressed: () async {
+                await showDialog(
+                  context: context,
+                  builder: (context) => Dialog(
+                    child: Container(
+                      margin: const EdgeInsets.all(10),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Center(
+                            child: Text(
+                              'Acciones Clipboard',
+                              style: Theme.of(context).textTheme.headlineSmall,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          ListTile(
+                            titleAlignment: ListTileTitleAlignment.top,
+                            leading: CircleAvatar(child: Icon(Icons.copy)),
+                            title: Text(
+                              'Copiar ecuacion y resultado en el portapapeles.',
+                            ),
+                          ),
+                          const Divider(),
+                          ListTile(
+                            titleAlignment: ListTileTitleAlignment.top,
+                            leading: CircleAvatar(child: Icon(Icons.paste)),
+                            title: Text(
+                              'Pegar ecuacion y calcularla. Vuelve a la calculadora.',
+                            ),
+                          ),
+                          const Divider(),
+                          ListTile(
+                            titleAlignment: ListTileTitleAlignment.top,
+                            leading: CircleAvatar(child: Icon(Icons.delete)),
+                            title: Text('Eliminar ítem del historial.'),
+                          ),
+                          const Divider(),
+                          ListTile(
+                            titleAlignment: ListTileTitleAlignment.top,
+                            leading: CircleAvatar(
+                              child: Icon(Icons.delete_forever),
+                            ),
+                            title: Text('Borrar todo el historial.'),
+                          ),
+
+                          const SizedBox(height: 20),
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: const Text('Cerrar'),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+              icon: Icon(Icons.info),
+            ),
+            IconButton(
+              onPressed: () {
+                //sharedPrefs.clearAll();
+                sharedPrefs.clearClipboard();
+                _loadItems();
+              },
+              icon: Icon(Icons.delete_forever),
+            ),
+          ],
+        ),
+        body: SafeArea(
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            height: double.infinity,
+            width: double.infinity,
+            color: Color(0xff292D36),
+            child: clipboard.isEmpty
+                ? Text(
+                    'Portapapeles vacío',
+                    style: TextStyle(color: Colors.white, fontSize: 24),
+                  )
+                : ListView.builder(
+                    itemCount: clipboard.length,
+                    itemBuilder: (context, index) {
+                      //String item = items[index];
+                      //String resultado = item.substring(item.indexOf('=') + 1);
+                      //String ecuacion = item.substring(0, item.indexOf('='));
+
+                      var item = clipboard[index];
+                      //var json = jsonEncode(clip);
+                      //var json = jsonDecode(clip);
+                      //Historial item = json.decode(clipboard[index]);
+                      //var json = jsonDecode(clipboard[index]);
+                      //var item = Historial.fromJson(clip);
+                      String resultado = item.result;
+                      String ecuacion = item.input;
+
+                      return ListTile(
+                        contentPadding: .all(14),
+                        titleAlignment: ListTileTitleAlignment.top,
+                        leading: CircleAvatar(child: Text('${index + 1}')),
+                        title: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          alignment: AlignmentGeometry.centerLeft,
+                          child: Text(
+                            resultado,
+                            style: TextStyle(fontFamily: 'ShareTechMono'),
+                          ),
+                        ),
+                        subtitle: Text(ecuacion),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                //copyItem(item);
+                                save(item);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'Ecuacion y resultado copiados al portapapeles',
+                                    ),
+                                  ),
+                                );
+                              },
+                              icon: Icon(Icons.copy),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                paste(ecuacion);
+                              },
+                              icon: Icon(Icons.paste),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                //sharedPrefs.removeItem(index);
+                                sharedPrefs.removeHistory(index);
+                                _loadItems();
+                              },
+                              icon: Icon(Icons.delete),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+          ),
+        ),
+      ),
+    );
+  }
+}

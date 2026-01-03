@@ -1,4 +1,4 @@
-import 'package:decimal/decimal.dart';
+import 'package:intl/intl.dart';
 import 'package:math_expressions/math_expressions.dart';
 
 class ParseEq {
@@ -26,11 +26,15 @@ class ParseEq {
       //String resultado = eval.toStringAsPrecision(16);
       //resultado = Decimal.parse(resultado).toString();
 
-      String resultRounded = eval.toStringAsFixed(5);
+      final NumberFormat pattern = NumberFormat.decimalPattern();
+      pattern.maximumFractionDigits = 10; // 10 decimales
+      String resultado = pattern.format(eval);
+
+      /*String resultRounded = eval.toStringAsFixed(5);
       resultRounded = Decimal.parse(resultRounded).toString();
       double resultRoundedAsDouble = double.parse(resultRounded);
       String resultado = resultRoundedAsDouble.toString();
-      resultado = Decimal.parse(resultado).toString();
+      resultado = Decimal.parse(resultado).toString();*/
       /*if (state.endsWith('.0')) {
         state = state.substring(0, state.length - 2);
       }*/
