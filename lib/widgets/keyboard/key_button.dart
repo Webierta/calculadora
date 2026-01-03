@@ -71,12 +71,14 @@ class KeyButton extends StatelessWidget {
             backgroundColor: tipo?.backgroundColor,
           ),
           onPressed: onPressed,
-          child: icon != null
-              ? Icon(icon, size: 30, color: tipo?.textColor)
-              : Text(
-                  label,
-                  style: TextStyle(fontSize: 24, color: tipo?.textColor),
-                ),
+          child: FittedBox(
+            child: icon != null
+                ? Icon(icon, size: 30, color: tipo?.textColor)
+                : Text(
+                    label,
+                    style: TextStyle(fontSize: 24, color: tipo?.textColor),
+                  ),
+          ),
         ),
       ),
     );
