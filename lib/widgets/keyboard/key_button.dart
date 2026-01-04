@@ -68,7 +68,9 @@ class KeyButton extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(10)),
               side: BorderSide(color: Colors.black),
             ),
-            backgroundColor: tipo?.backgroundColor,
+            backgroundColor: label == '='
+                ? Color(0xffE78388)
+                : tipo?.backgroundColor,
           ),
           onPressed: onPressed,
           child: FittedBox(
@@ -76,7 +78,10 @@ class KeyButton extends StatelessWidget {
                 ? Icon(icon, size: 30, color: tipo?.textColor)
                 : Text(
                     label,
-                    style: TextStyle(fontSize: 24, color: tipo?.textColor),
+                    style: TextStyle(
+                      fontSize: label == '=' ? 42 : 24,
+                      color: label == '=' ? Colors.white : tipo?.textColor,
+                    ),
                   ),
           ),
         ),
