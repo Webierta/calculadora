@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../widgets/display/historial.dart';
+import '../models/historial.dart';
 
 final historialProvider = NotifierProvider<HistorialNotifier, List<Historial>>(
   HistorialNotifier.new,

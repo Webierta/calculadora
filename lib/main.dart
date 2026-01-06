@@ -1,9 +1,10 @@
 import 'dart:io' show Platform;
 
-import 'package:calculadora/screens/calculadora.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:window_manager/window_manager.dart';
+
+import 'screens/calculadora.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,7 +41,7 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
-        brightness: Brightness.dark,
+        brightness: Brightness.dark, // dark
         fontFamily: 'RobotoMono',
       ),
       builder: (context, child) {

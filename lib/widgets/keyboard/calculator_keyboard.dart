@@ -4,25 +4,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../providers/ecuacion_notifier.dart';
-import '../../providers/historial_notifier.dart';
-import '../../providers/resultado_notifier.dart';
-import '../../utils/parse_eq.dart';
+import '../../models/historial.dart';
+import '../../providers/calculator_notifier.dart';
 import '../../utils/portapapeles.dart';
-import '../display/historial.dart';
+import '../../utils/snack_bar_helper.dart';
 import 'key_button.dart';
 
-class KeyPad extends ConsumerWidget {
-  const KeyPad({super.key});
+class CalculatorKeyboard extends ConsumerWidget {
+  const CalculatorKeyboard({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pantallaEcuacion = ref.watch(ecuacionProvider);
-    final pantallaResultado = ref.watch(resultadoProvider);
+    final calculator = ref.watch(calculatorProvider);
 
-    void insertText(String text) {
-      ref.read(ecuacionProvider.notifier).add(text);
-    }
+    void insertText(String text) =>
+        ref.read(calculatorProvider.notifier).addInput(text);
+
+    KeyButton keyButtonFuncion(String label) =>
+        KeyButton.funcion(onPressed: () => insertText(label), label: label);
 
     KeyButton keyButtonNumber(String label) =>
         KeyButton.number(onPressed: () => insertText(label), label: label);
@@ -33,50 +32,38 @@ class KeyPad extends ConsumerWidget {
     KeyButton keyButtonCaracter(String label) =>
         KeyButton.caracter(onPressed: () => insertText(label), label: label);
 
-    KeyButton keyButtonConstante(String label) {
-      String constante = '';
-      if (label == 'π') {
-        constante = math.pi.toString();
-      } else if (label == 'e') {
-        constante = math.e.toString();
-      } else if (label == '√2') {
-        constante = math.sqrt2.toString();
-      }
-      return KeyButton.constante(
-        onPressed: () => insertText(constante),
-        label: label,
-      );
-    }
+    KeyButton keyButtonConstante(String label) =>
+        KeyButton.constante(onPressed: () => insertText(label), label: label);
 
     void funcionCopiar() async {
       try {
-        if (pantallaResultado.isEmpty ||
-            pantallaResultado == 'Error' ||
-            pantallaEcuacion.isEmpty) {
+        if (calculator.result.isEmpty ||
+            calculator.hasError == true ||
+            calculator.expression.isEmpty) {
           throw Error();
         }
 
         Historial hist = Historial(
-          input: pantallaEcuacion,
-          result: pantallaResultado,
+          input: calculator.expression,
+          result: calculator.result,
         );
         //await Clipboard.setData(ClipboardData(text: jsonEncode(hist)));
-        await Clipboard.setData(ClipboardData(text: pantallaEcuacion));
+        await Clipboard.setData(ClipboardData(text: calculator.expression));
         final SharedPrefs sharedPrefs = SharedPrefs();
         await sharedPrefs.init();
         sharedPrefs.saveHistory(hist);
-
         if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Ecuacion y resultado copiados al portapapeles'),
-            ),
+          SnackBarHelper.show(
+            context: context,
+            msg: 'Ecuacion copiada y guardada en Clipboard',
           );
         }
       } catch (e) {
         if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Error al copiar al portapapeles')),
+          SnackBarHelper.show(
+            context: context,
+            msg: 'Error al copiar al portapapeles',
+            error: true,
           );
         }
       }
@@ -94,22 +81,21 @@ class KeyPad extends ConsumerWidget {
           return;
         }
         String item = '${data.text}';
-        //var json = jsonDecode(item);
-        //var hist = Historial.fromJson(json);
-        //String ecuacion = hist.input;
-        if (ParseEq.isEcuacion(item)) {
-          ref.read(ecuacionProvider.notifier).add(item);
-        } else {
+        item = item.replaceAll('×', '*'); // 2 × 2
+        item = item.replaceAll('x', '*'); // 2 x 6
+        item = item.replaceAll('÷', '/');
+        item = item.replaceAll('√', 'sqrt'); // √(49) + 2
+        item = item.replaceAll('π', math.pi.toString());
+        item = item.replaceAll('e', math.e.toString());
+
+        if (ref.read(calculatorProvider.notifier).isEq(item) == false) {
           throw Error();
         }
+        ref.read(calculatorProvider.notifier).updateExpresion(item);
       } catch (e) {
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                'Error: El contenido del portapapeles no se reconoce como una ecuación',
-              ),
-            ),
+            SnackBar(content: Text('Error: No se reconoce como una ecuación')),
           );
         }
       }
@@ -128,27 +114,9 @@ class KeyPad extends ConsumerWidget {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        KeyButton.funcion(
-                          onPressed: () {
-                            ref.read(ecuacionProvider.notifier).clear();
-                            ref.read(resultadoProvider.notifier).clear();
-                            ref.read(historialProvider.notifier).clear();
-                          },
-                          label: 'AC',
-                        ),
-                        KeyButton.funcion(
-                          onPressed: () {
-                            ref.read(ecuacionProvider.notifier).clear();
-                            ref.read(resultadoProvider.notifier).clear();
-                          },
-
-                          label: 'C',
-                        ),
-                        KeyButton.funcion(
-                          onPressed: () =>
-                              ref.read(ecuacionProvider.notifier).remove(),
-                          label: '⌫',
-                        ),
+                        keyButtonFuncion('AC'),
+                        keyButtonFuncion('C'),
+                        keyButtonFuncion('⌫'),
                         KeyButton.funcion(
                           onPressed: funcionCopiar,
                           label: 'copiar',
@@ -157,11 +125,6 @@ class KeyPad extends ConsumerWidget {
                           onPressed: funcionPegar,
                           label: 'pegar',
                         ),
-                        /*KeyButton.funcion(
-                          onPressed: () =>
-                              ref.read(resultadoProvider.notifier).redondeo(),
-                          label: '.00',
-                        ),*/
                       ],
                     ),
                   ),
@@ -172,7 +135,7 @@ class KeyPad extends ConsumerWidget {
                         for (final number in ['7', '8', '9'])
                           keyButtonNumber(number),
                         keyButtonOperator('％'),
-                        keyButtonOperator('mod'),
+                        keyButtonOperator('mod'), //mod
                       ],
                     ),
                   ),
@@ -182,8 +145,8 @@ class KeyPad extends ConsumerWidget {
                       children: [
                         for (final number in ['4', '5', '6'])
                           keyButtonNumber(number),
-                        keyButtonOperator('^2'),
-                        keyButtonOperator('^'),
+                        keyButtonOperator('x²'),
+                        keyButtonOperator('xⁿ'),
                       ],
                     ),
                   ),
@@ -206,7 +169,7 @@ class KeyPad extends ConsumerWidget {
                         keyButtonNumber('0'),
                         keyButtonCaracter(')'),
                         keyButtonOperator('÷'),
-                        keyButtonOperator('x'),
+                        keyButtonOperator('×'),
                       ],
                     ),
                   ),
@@ -233,7 +196,7 @@ class KeyPad extends ConsumerWidget {
                             children: [
                               keyButtonConstante('π'),
                               keyButtonConstante('e'),
-                              keyButtonConstante('√2'),
+                              keyButtonConstante('√²'),
                             ],
                           ),
                         ),
@@ -245,17 +208,8 @@ class KeyPad extends ConsumerWidget {
                               KeyButton.operator(
                                 onPressed: () {
                                   ref
-                                      .read(resultadoProvider.notifier)
-                                      .calcular(pantallaEcuacion);
-                                  var resultado = ref.watch(resultadoProvider);
-                                  ref
-                                      .read(historialProvider.notifier)
-                                      .add(
-                                        Historial(
-                                          input: pantallaEcuacion,
-                                          result: resultado,
-                                        ),
-                                      );
+                                      .read(calculatorProvider.notifier)
+                                      .calculate();
                                 },
                                 label: '=',
                               ),

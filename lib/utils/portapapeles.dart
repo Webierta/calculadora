@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../widgets/display/historial.dart';
+import '../models/historial.dart';
 
 class SharedPrefs {
   static SharedPreferences? _sharedPrefs;

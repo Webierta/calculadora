@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../widgets/display/display_pad.dart';
-import '../widgets/keyboard/key_pad.dart';
+import '../widgets/display/calculator_display.dart';
+import '../widgets/keyboard/calculator_keyboard.dart';
 import 'clipboard_screen.dart';
 import 'help.dart';
 import 'info.dart';
@@ -71,10 +71,8 @@ class Calculadora extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Expanded(child: const DisplayPad()),
-                //const SizedBox(height: 20),
-                //FittedBox(child: const Teclado()),
-                Expanded(child: const KeyPad()),
+                Expanded(flex: 2, child: const CalculatorDisplay()),
+                Expanded(flex: 3, child: const CalculatorKeyboard()),
               ],
             ),
           ),

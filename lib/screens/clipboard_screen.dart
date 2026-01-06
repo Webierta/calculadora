@@ -1,12 +1,11 @@
-import 'package:calculadora/providers/ecuacion_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../providers/historial_notifier.dart';
-import '../providers/resultado_notifier.dart';
+import '../models/historial.dart';
+import '../providers/calculator_notifier.dart';
 import '../utils/portapapeles.dart';
-import '../widgets/display/historial.dart';
+import '../utils/snack_bar_helper.dart';
 
 class ClipboardScreen extends ConsumerStatefulWidget {
   const ClipboardScreen({super.key});
@@ -52,21 +51,17 @@ class _ClipboardScreenState extends ConsumerState<ClipboardScreen> {
     }
 
     void paste(String ecuacion) {
-      // limpiar pantalla resultado
-      ref.read(resultadoProvider.notifier).clear();
-      // limpiar pantalla ecuacion
-      ref.read(ecuacionProvider.notifier).clear();
-      // set pantalla ecuacion = ecuacion
-      ref.read(ecuacionProvider.notifier).add(ecuacion);
-      // ir a calculadora page
-      ScaffoldMessenger.of(context).removeCurrentSnackBar();
-      Navigator.of(context).pop();
-      // calcula
-      ref.read(resultadoProvider.notifier).calcular(ecuacion);
-      var resultado = ref.watch(resultadoProvider);
-      ref
-          .read(historialProvider.notifier)
-          .add(Historial(input: ecuacion, result: resultado));
+      try {
+        ref.read(calculatorProvider.notifier).pasteFromClipboard(ecuacion);
+        ScaffoldMessenger.of(context).removeCurrentSnackBar();
+        Navigator.of(context).pop();
+      } catch (e) {
+        ScaffoldMessenger.of(context).removeCurrentSnackBar();
+        SnackBarHelper.show(
+          context: context,
+          msg: 'Error inserting from history',
+        );
+      }
     }
 
     return PopScope(
@@ -208,12 +203,10 @@ class _ClipboardScreenState extends ConsumerState<ClipboardScreen> {
                               onPressed: () {
                                 //copyItem(item);
                                 save(item);
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
+                                SnackBarHelper.show(
+                                  context: context,
+                                  msg:
                                       'Ecuacion y resultado copiados al portapapeles',
-                                    ),
-                                  ),
                                 );
                               },
                               icon: Icon(Icons.copy),
