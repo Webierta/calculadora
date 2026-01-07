@@ -17,8 +17,6 @@ class ClipboardScreen extends ConsumerStatefulWidget {
 class _ClipboardScreenState extends ConsumerState<ClipboardScreen> {
   final SharedPrefs sharedPrefs = SharedPrefs();
 
-  //List<String> items = [];
-
   List<Historial> clipboard = [];
 
   @override
@@ -29,23 +27,11 @@ class _ClipboardScreenState extends ConsumerState<ClipboardScreen> {
 
   Future<void> _loadItems() async {
     await sharedPrefs.init();
-    //setState(() => items = sharedPrefs.items);
-    setState(() {
-      //clipboard = sharedPrefs.clipboard;
-      clipboard = sharedPrefs.getHistory();
-    });
+    setState(() => clipboard = sharedPrefs.getHistory());
   }
 
   @override
   Widget build(BuildContext context) {
-    /*void copyItem(String item) async {
-      await Clipboard.setData(ClipboardData(text: item));
-    }*/
-
-    /*void save(Historial value) async {
-      await Clipboard.setData(ClipboardData(text: json.encode(value)));
-    }*/
-
     void save(Historial hist) async {
       await Clipboard.setData(ClipboardData(text: hist.toString()));
     }
@@ -170,19 +156,9 @@ class _ClipboardScreenState extends ConsumerState<ClipboardScreen> {
                 : ListView.builder(
                     itemCount: clipboard.length,
                     itemBuilder: (context, index) {
-                      //String item = items[index];
-                      //String resultado = item.substring(item.indexOf('=') + 1);
-                      //String ecuacion = item.substring(0, item.indexOf('='));
-
                       var item = clipboard[index];
-                      //var json = jsonEncode(clip);
-                      //var json = jsonDecode(clip);
-                      //Historial item = json.decode(clipboard[index]);
-                      //var json = jsonDecode(clipboard[index]);
-                      //var item = Historial.fromJson(clip);
                       String resultado = item.result;
                       String ecuacion = item.input;
-
                       return ListTile(
                         contentPadding: .all(14),
                         titleAlignment: ListTileTitleAlignment.top,
@@ -201,7 +177,6 @@ class _ClipboardScreenState extends ConsumerState<ClipboardScreen> {
                           children: [
                             IconButton(
                               onPressed: () {
-                                //copyItem(item);
                                 save(item);
                                 SnackBarHelper.show(
                                   context: context,
@@ -219,7 +194,6 @@ class _ClipboardScreenState extends ConsumerState<ClipboardScreen> {
                             ),
                             IconButton(
                               onPressed: () {
-                                //sharedPrefs.removeItem(index);
                                 sharedPrefs.removeHistory(index);
                                 _loadItems();
                               },

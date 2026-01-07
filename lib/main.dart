@@ -41,7 +41,7 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
-        brightness: Brightness.dark, // dark
+        brightness: Brightness.dark,
         fontFamily: 'RobotoMono',
       ),
       builder: (context, child) {

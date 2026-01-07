@@ -4,13 +4,13 @@
 
 Esta calculadora presenta un teclado con varios tipos de botones:
 
-- **Funciones** de limpiar todo (AC), limpiar ecuacion y resultado (C), deshacer, copiar (copia al portapapeles y guarda en el Clipboard) y pegar (pega ecuacion desde el portapapeles).
+- **Funciones** de (AC) limpiar todo, (C) limpiar ecuacion y resultado manteniendo historial, deshacer último carácter, copiar (copia al portapapeles y guarda en el Clipboard) y pegar (pega ecuacion desde el portapapeles).
 
 - **Operadores** para calcular porcentaje, módulo, cuadrado, exponente, raíz cuadrada, factorial, división, multiplicación, resta y suma.
 
 - **Números y caracteres** (decimal, parentesis y llaves).
 
-- **Constantes**: π (pi), e (número de Euler o constante de Napier), √² (ráiz cuadrada de 2 o constante pitagórica).
+- **Constantes**: *π* (pi), *e* (número de Euler o constante de Napier), *√²* (raíz cuadrada de 2 o constante pitagórica).
 
 También es posible **pegar una ecuación** desde el portapapeles. Además, desde el Clipboard se puede pegar directamente una ecuación guardada.
 
@@ -42,7 +42,7 @@ La pantalla de salida muestra, de arriba a abajo:
 
 - El **resultado** calculado o, en su caso, un aviso de error.
 - El **historial** de ecuaciones utilizadas en la actual sesión (si lo hay).
-- La expresión o ecuación tecleada o pegada.
+- La expresión o ecuación introducida (tecleada o pegada).
 - La **previsualización** del resultado o, en su caso, una **sugerencia** o un aviso de error (desaparece cuando se obtiene el resultado).
 
 ## Formato
@@ -58,6 +58,12 @@ Asimismo, el libro de estilo de la lengua española recomienda un espacio fino e
 Los números se manejan como valores dobles regulares que son números de punto flotante de doble precisión de 64 bits como se especifica en el Estándar IEEE 754. Aproximadamente ofrecen hasta 15 dígitos de precisión.
 
 El resultado se expresa con un máximo de 8 decimales.
+
+Las cantidades muy grandes (valores absolutos iguales o mayores que 10²¹) o muy pequeñas (valores absolutos menores que 10⁻⁶) se expresan de manera simplificada mediante la notación científica utilizando la letra *e* (notación e) para indicar la potencia de 10.
+
+La notación e, donde la letra e seguida de un número representa, literalmente, «multiplicado por diez elevado a» (es decir, × 10ⁿ).
+
+Dicho de otro modo, si tomamos dos números reales # y n, la representación #en significaría exactamente `# × 10ⁿ`.  Así, por ejemplo, 0.0000001 se escribe 1e-7 o el número de Avogadro (602214076000000000000000, seiscientos dos mil doscientos catorce trillones setenta y seis mil billones) se escribe 6.02214076e+23.
 
 ## Secuencia de operadores. Jerarquía detallada
 

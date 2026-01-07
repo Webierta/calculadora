@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../providers/calculator_notifier.dart';
 import '../../providers/historial_notifier.dart';
+import 'display_history.dart';
 
 class CalculatorDisplay extends ConsumerWidget {
   const CalculatorDisplay({super.key});
@@ -41,33 +42,7 @@ class CalculatorDisplay extends ConsumerWidget {
             ),
           ),
           (history.isNotEmpty)
-              ? Expanded(
-                  child: Container(
-                    color: Colors.white10,
-                    child: ListView.builder(
-                      itemCount: history.length,
-                      itemBuilder: (context, index) {
-                        final reversedHistory = history.reversed.toList();
-                        final calculation = reversedHistory[index];
-                        return ListTile(
-                          title: Text(
-                            calculation.input,
-                            style: TextStyle(color: Colors.white54),
-                          ),
-                          trailing: Text(
-                            calculation.result,
-                            style: TextStyle(
-                              color: Colors.white54,
-                              fontSize: 20,
-                              fontFamily: 'ShareTechMono',
-                            ),
-                          ),
-                          contentPadding: .symmetric(horizontal: 10),
-                        );
-                      },
-                    ),
-                  ),
-                )
+              ? Expanded(child: const DisplayHistory())
               : const Spacer(),
           Padding(
             padding: .symmetric(horizontal: 10),
@@ -80,6 +55,7 @@ class CalculatorDisplay extends ConsumerWidget {
             Padding(
               padding: .symmetric(horizontal: 10),
               child: Text(
+                softWrap: true,
                 '= ${calculator.preview}',
                 style: TextStyle(fontSize: 18.0, color: Colors.white54),
               ),

@@ -47,7 +47,7 @@ class CalculatorKeyboard extends ConsumerWidget {
           input: calculator.expression,
           result: calculator.result,
         );
-        //await Clipboard.setData(ClipboardData(text: jsonEncode(hist)));
+
         await Clipboard.setData(ClipboardData(text: calculator.expression));
         final SharedPrefs sharedPrefs = SharedPrefs();
         await sharedPrefs.init();
@@ -92,6 +92,7 @@ class CalculatorKeyboard extends ConsumerWidget {
           throw Error();
         }
         ref.read(calculatorProvider.notifier).updateExpresion(item);
+        ref.read(calculatorProvider.notifier).updateCursor(item.length);
       } catch (e) {
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(

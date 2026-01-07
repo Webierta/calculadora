@@ -13,7 +13,11 @@ class HistorialNotifier extends Notifier<List<Historial>> {
   }
 
   void add(Historial historial) {
-    state.add(historial);
+    final newHistorial = Historial(
+      input: historial.input,
+      result: historial.result,
+    );
+    state = [...state, newHistorial];
   }
 
   void clear() {

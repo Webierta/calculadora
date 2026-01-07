@@ -115,6 +115,7 @@ class CalculatorNotifier extends Notifier<Calculator> {
     }*/
 
     updateResult('');
+    _updatePreview();
 
     // Handle scientific functions - add proper format
     String processedInput = input;
@@ -129,10 +130,10 @@ class CalculatorNotifier extends Notifier<Calculator> {
       processedInput = '^';
     }
     if (input == 'mod') {
-      processedInput = ' % ';
+      processedInput = '%';
     }
     if (input == '％') {
-      processedInput = ' / 100 * ';
+      processedInput = '/100*';
     }
 
     // Insert the input at cursor position
@@ -149,19 +150,19 @@ class CalculatorNotifier extends Notifier<Calculator> {
     _updatePreview();
   }
 
-  /*void setCursorPosition2(int position) {
+  /*void setCursorPosition(int position) {
     state.cursorPosition = position.clamp(0, state.expression.length);
     copyWith(newCursorPosition: state.cursorPosition);
   }
 
-  void moveCursorLeft2() {
+  void moveCursorLeft() {
     if (state.cursorPosition > 0) {
       state.cursorPosition--;
       copyWith(newCursorPosition: state.cursorPosition);
     }
   }
 
-  void moveCursorRight2() {
+  void moveCursorRight() {
     if (state.cursorPosition < state.expression.length) {
       state.cursorPosition++;
       copyWith(newCursorPosition: state.cursorPosition);
@@ -187,11 +188,22 @@ class CalculatorNotifier extends Notifier<Calculator> {
       cm.bindVariable(Variable('√²'), Number(math.sqrt2));
 
       double evalResult = RealEvaluator(cm).evaluate(exp).toDouble();
-      if (evalResult.isInfinite || evalResult.isNaN) {
-        state.preview = 'Error';
+
+      if (evalResult.isNaN) {
+        state.preview = 'isNaN';
+        copyWith(newPreview: state.preview);
+      } else if (evalResult.isInfinite) {
+        state.preview = 'isInfinite';
         copyWith(newPreview: state.preview);
       } else {
-        state.preview = _formatNumber(evalResult);
+        bool isLong =
+            (evalResult.abs() < math.pow(10, -6) ||
+            evalResult.abs() >= math.pow(10, 21));
+        String formattedResult = _formatNumber(evalResult);
+        if (isLong) {
+          formattedResult = evalResult.toStringAsExponential();
+        }
+        state.preview = formattedResult;
         copyWith(newPreview: state.preview);
       }
     } catch (e) {
@@ -214,7 +226,8 @@ class CalculatorNotifier extends Notifier<Calculator> {
           expr.endsWith('×') ||
           expr.endsWith('÷') ||
           expr.endsWith('*') ||
-          expr.endsWith('/')) {
+          expr.endsWith('/') ||
+          expr.endsWith('%')) {
         state.preview = 'Enter next number';
         copyWith(newPreview: state.preview);
       } else {
@@ -300,7 +313,13 @@ class CalculatorNotifier extends Notifier<Calculator> {
           newPreview: state.preview,
         );
       } else {
+        bool isLong =
+            (evalResult.abs() < math.pow(10, -6) ||
+            evalResult.abs() >= math.pow(10, 21));
         String formattedResult = _formatNumber(evalResult);
+        if (isLong) {
+          formattedResult = evalResult.toStringAsExponential();
+        }
         state.result = formattedResult;
         state.preview = ''; // Clear preview after calculation
         state.hasError = false;
@@ -417,24 +436,6 @@ class CalculatorNotifier extends Notifier<Calculator> {
       }
     });
 
-    // Handle factorial with better validation
-    processed = processed.replaceAllMapped(RegExp(r'(\d+)!'), (match) {
-      try {
-        int value = int.parse(match.group(1)!);
-        if (value < 0) {
-          throw Exception('Factorial of negative number undefined');
-        }
-        if (value > 170) {
-          throw Exception(
-            'Factorial too large',
-          ); // 170! is close to double limit
-        }
-        return _factorial(value).toString();
-      } catch (e) {
-        return '${match.group(1)!}!'; // Keep original on error
-      }
-    });
-
     // Now replace constants after function processing
     processed = processed.replaceAll('π', math.pi.toString());
     processed = processed.replaceAll('e', math.e.toString());
@@ -448,7 +449,7 @@ class CalculatorNotifier extends Notifier<Calculator> {
     }
 
     // Check for invalid patterns like double operators
-    if (RegExp(r'[\+\-\*/]{2,}').hasMatch(processed)) {
+    if (RegExp(r'[+\-*/]{2,}').hasMatch(processed)) {
       throw Exception('Invalid operator sequence');
     }
 
@@ -458,7 +459,7 @@ class CalculatorNotifier extends Notifier<Calculator> {
     }*/ // .*\/0([^.]|$|\.(0{4,}.*|0{1,4}([^0-9]|$))).*
 
     if (RegExp(
-      r'.*\/0([^.]|$|\.(0{4,}.*|0{1,4}([^0-9]|$))).*',
+      r'.*/0([^.]|$|\.(0{4,}.*|0{1,4}([^0-9]|$))).*',
     ).hasMatch(processed)) {
       throw Exception('Division by zero');
     }
@@ -495,19 +496,6 @@ class CalculatorNotifier extends Notifier<Calculator> {
         throw Exception('Cannot evaluate expression: $expr');
       }
     }
-  }
-
-  double _factorial(int n) {
-    if (n < 0) throw Exception('Factorial of negative number is undefined');
-    if (n > 170) throw Exception('Factorial too large to compute');
-    if (n <= 1) return 1;
-
-    double result = 1;
-    for (int i = 2; i <= n; i++) {
-      result *= i;
-      if (result.isInfinite) throw Exception('Factorial result too large');
-    }
-    return result;
   }
 
   String _formatNumber(double number) {
@@ -560,9 +548,7 @@ class CalculatorNotifier extends Notifier<Calculator> {
   }
 
   bool _isNumeric(String? s) {
-    if (s == null) {
-      return false;
-    }
+    if (s == null) return false;
     return double.tryParse(s) != null;
   }
 
