@@ -15,15 +15,21 @@ class InfoScreen extends StatelessWidget {
           color: Colors.white10,
           //padding: .all(0),
           child: SingleChildScrollView(
-            child: const Column(
+            child: Column(
               children: [
                 FittedBox(
                   child: AboutDialog(
                     applicationName: 'Calculadora',
-                    applicationVersion: '1.2.1\nby Webierta',
+                    applicationVersion: '1.2.2\nby Webierta',
                     applicationLegalese: 'Licencia GPLv3',
-                    applicationIcon: Icon(Icons.calculate_outlined, size: 200),
+                    //applicationIcon: Icon(Icons.calculate_outlined, size: 200),
+                    applicationIcon: CircleAvatar(
+                      radius: 65,
+                      backgroundColor: Colors.white,
+                      child: Image.asset('assets/icon/icon.png', width: 100),
+                    ),
                     children: [
+                      const SizedBox(height: 30),
                       Text('Open Source. Copyleft 2025-2026'),
                       SizedBox(height: 10),
                       Row(

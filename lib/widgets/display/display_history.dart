@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../providers/historial_notifier.dart';
+import '../../providers/ecuaciones_notifier.dart';
 
 class DisplayHistory extends StatelessWidget {
   const DisplayHistory({super.key});
@@ -12,7 +12,7 @@ class DisplayHistory extends StatelessWidget {
       color: Colors.white10,
       child: Consumer(
         builder: (context, ref, _) {
-          final history = ref.watch(historialProvider);
+          final history = ref.watch(ecuacionesProvider);
           return ListView.builder(
             padding: .symmetric(horizontal: 10),
             itemCount: history.length,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../providers/calculator_notifier.dart';
-import '../../providers/historial_notifier.dart';
+import '../../providers/ecuaciones_notifier.dart';
 import 'display_history.dart';
 
 class CalculatorDisplay extends ConsumerWidget {
@@ -11,7 +11,7 @@ class CalculatorDisplay extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final calculator = ref.watch(calculatorProvider);
-    final history = ref.watch(historialProvider);
+    final history = ref.watch(ecuacionesProvider);
 
     return Container(
       //padding: .symmetric(horizontal: 10),
@@ -44,9 +44,22 @@ class CalculatorDisplay extends ConsumerWidget {
           (history.isNotEmpty)
               ? Expanded(child: const DisplayHistory())
               : const Spacer(),
+          if (calculator.preview.isEmpty)
+            Opacity(
+              opacity: 0,
+              child: Padding(
+                padding: .symmetric(horizontal: 10),
+                child: Text(
+                  'space',
+                  style: TextStyle(fontSize: 18.0, color: Colors.transparent),
+                ),
+              ),
+            ),
           Padding(
             padding: .symmetric(horizontal: 10),
             child: Text(
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
               calculator.expression,
               style: TextStyle(fontSize: 24.0, fontFamily: 'ShareTechMono'),
             ),

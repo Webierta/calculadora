@@ -3,9 +3,9 @@ import 'package:flutter/services.dart';
 
 import '../widgets/display/calculator_display.dart';
 import '../widgets/keyboard/calculator_keyboard.dart';
-import 'clipboard_screen.dart';
 import 'help.dart';
 import 'info.dart';
+import 'memoria_screen.dart';
 
 class Calculadora extends StatelessWidget {
   const Calculadora({super.key});
@@ -30,13 +30,12 @@ class Calculadora extends StatelessWidget {
                 ScaffoldMessenger.of(context).removeCurrentSnackBar();
                 Navigator.of(context).push(
                   MaterialPageRoute<void>(
-                    builder: (context) => const ClipboardScreen(),
+                    builder: (context) => const MemoriaScreen(),
                   ),
                 );
               },
-              icon: Icon(Icons.content_paste_search),
+              icon: Icon(Icons.assignment),
             ),
-            const SizedBox(width: 10),
             IconButton(
               onPressed: () {
                 ScaffoldMessenger.of(context).removeCurrentSnackBar();
@@ -46,9 +45,8 @@ class Calculadora extends StatelessWidget {
                   ),
                 );
               },
-              icon: Icon(Icons.help),
+              icon: Icon(Icons.help_outline),
             ),
-            const SizedBox(width: 10),
             IconButton(
               onPressed: () {
                 ScaffoldMessenger.of(context).removeCurrentSnackBar();
@@ -58,7 +56,7 @@ class Calculadora extends StatelessWidget {
                   ),
                 );
               },
-              icon: Icon(Icons.info),
+              icon: Icon(Icons.info_outline),
             ),
             const SizedBox(width: 10),
           ],

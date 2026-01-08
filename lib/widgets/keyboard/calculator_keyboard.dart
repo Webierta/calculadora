@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../models/historial.dart';
+import '../../models/ecuacion.dart';
 import '../../providers/calculator_notifier.dart';
-import '../../utils/portapapeles.dart';
+import '../../utils/shared_prefs.dart';
 import '../../utils/snack_bar_helper.dart';
 import 'key_button.dart';
 
@@ -21,59 +21,69 @@ class CalculatorKeyboard extends ConsumerWidget {
         ref.read(calculatorProvider.notifier).addInput(text);
 
     KeyButton keyButtonFuncion(String label) =>
-        KeyButton.funcion(onPressed: () => insertText(label), label: label);
+        KeyButtonFuncion(onPressed: () => insertText(label), label: label);
 
     KeyButton keyButtonNumber(String label) =>
-        KeyButton.number(onPressed: () => insertText(label), label: label);
+        KeyButtonNumber(onPressed: () => insertText(label), label: label);
 
     KeyButton keyButtonOperator(String label) =>
-        KeyButton.operator(onPressed: () => insertText(label), label: label);
+        KeyButtonOperator(onPressed: () => insertText(label), label: label);
 
     KeyButton keyButtonCaracter(String label) =>
-        KeyButton.caracter(onPressed: () => insertText(label), label: label);
+        KeyButtonCaracter(onPressed: () => insertText(label), label: label);
 
     KeyButton keyButtonConstante(String label) =>
-        KeyButton.constante(onPressed: () => insertText(label), label: label);
+        KeyButtonConstante(onPressed: () => insertText(label), label: label);
 
-    void funcionCopiar() async {
+    void memoryStore() async {
       try {
         if (calculator.result.isEmpty ||
             calculator.hasError == true ||
             calculator.expression.isEmpty) {
-          throw Error();
+          throw Exception();
         }
-
-        Historial hist = Historial(
+        Ecuacion hist = Ecuacion(
           input: calculator.expression,
           result: calculator.result,
         );
-
         await Clipboard.setData(ClipboardData(text: calculator.expression));
         final SharedPrefs sharedPrefs = SharedPrefs();
         await sharedPrefs.init();
-        sharedPrefs.saveHistory(hist);
+        sharedPrefs.memoryStore(hist);
         if (context.mounted) {
+          ScaffoldMessenger.of(context).removeCurrentSnackBar();
           SnackBarHelper.show(
             context: context,
-            msg: 'Ecuacion copiada y guardada en Clipboard',
+            msg: 'Ecuacion copiada y guardada en Memoria',
+          );
+        }
+      } on Exception catch (_) {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).removeCurrentSnackBar();
+          SnackBarHelper.show(
+            context: context,
+            msg: 'Requeridos expresion y resultado sin error.',
+            error: true,
           );
         }
       } catch (e) {
         if (context.mounted) {
+          ScaffoldMessenger.of(context).removeCurrentSnackBar();
           SnackBarHelper.show(
             context: context,
-            msg: 'Error al copiar al portapapeles',
+            msg: 'Error durante el proceso de copia y almacén en Memoria',
             error: true,
           );
         }
       }
     }
 
-    void funcionPegar() async {
+    void clipboardPaste() async {
       try {
         ClipboardData? data = await Clipboard.getData('text/plain');
         if (data == null) {
           if (context.mounted) {
+            ScaffoldMessenger.of(context).removeCurrentSnackBar();
             ScaffoldMessenger.of(
               context,
             ).showSnackBar(SnackBar(content: Text('Nada en el portapapeles')));
@@ -95,8 +105,11 @@ class CalculatorKeyboard extends ConsumerWidget {
         ref.read(calculatorProvider.notifier).updateCursor(item.length);
       } catch (e) {
         if (context.mounted) {
+          ScaffoldMessenger.of(context).removeCurrentSnackBar();
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Error: No se reconoce como una ecuación')),
+            SnackBar(
+              content: Text('Error: No se reconoce como una ecuación válida'),
+            ),
           );
         }
       }
@@ -118,13 +131,10 @@ class CalculatorKeyboard extends ConsumerWidget {
                         keyButtonFuncion('AC'),
                         keyButtonFuncion('C'),
                         keyButtonFuncion('⌫'),
-                        KeyButton.funcion(
-                          onPressed: funcionCopiar,
-                          label: 'copiar',
-                        ),
-                        KeyButton.funcion(
-                          onPressed: funcionPegar,
-                          label: 'pegar',
+                        KeyButtonFuncion(onPressed: memoryStore, label: 'MS'),
+                        KeyButtonFuncion(
+                          onPressed: clipboardPaste,
+                          label: 'MR',
                         ),
                       ],
                     ),
@@ -206,7 +216,7 @@ class CalculatorKeyboard extends ConsumerWidget {
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              KeyButton.operator(
+                              KeyButtonOperator(
                                 onPressed: () {
                                   ref
                                       .read(calculatorProvider.notifier)

@@ -1,7 +1,7 @@
 name: calculadora
 description: "Calculadora simple para operaciones aritméticas"
 publish_to: 'none'
-version: 1.2.1+8
+version: 1.2.2+9
 
 environment:
   sdk: ^3.10.4
@@ -12,9 +12,9 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_launcher_icons: ^0.14.4
-  flutter_md: ^0.0.8
   flutter_riverpod: ^3.1.0
   intl: ^0.20.2
+  markdown_widget: ^2.3.2+8
   math_expressions: ^3.1.0
   shared_preferences: ^2.5.4
   window_manager: ^0.5.1
@@ -36,6 +36,7 @@ flutter:
     - assets/fonts/
     - assets/images/
     - assets/files/
+    - assets/icon/icon.png
   fonts:
     - family: RobotoMono
       fonts:

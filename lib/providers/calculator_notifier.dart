@@ -6,9 +6,9 @@ import 'package:intl/intl.dart';
 import 'package:math_expressions/math_expressions.dart';
 
 import '../models/calculator.dart';
-import '../models/historial.dart';
+import '../models/ecuacion.dart';
 import '../utils/string_number.dart';
-import 'historial_notifier.dart';
+import 'ecuaciones_notifier.dart';
 
 final calculatorProvider = NotifierProvider<CalculatorNotifier, Calculator>(
   CalculatorNotifier.new,
@@ -96,7 +96,7 @@ class CalculatorNotifier extends Notifier<Calculator> {
     state.hasError = false;
     copyWith(newHasError: false);
     if (input == 'AC') {
-      ref.read(historialProvider.notifier).clear();
+      ref.read(ecuacionesProvider.notifier).clear();
       clear();
       return;
     }
@@ -200,7 +200,7 @@ class CalculatorNotifier extends Notifier<Calculator> {
             (evalResult.abs() < math.pow(10, -6) ||
             evalResult.abs() >= math.pow(10, 21));
         String formattedResult = _formatNumber(evalResult);
-        if (isLong) {
+        if (isLong && evalResult != 0) {
           formattedResult = evalResult.toStringAsExponential();
         }
         state.preview = formattedResult;
@@ -317,7 +317,7 @@ class CalculatorNotifier extends Notifier<Calculator> {
             (evalResult.abs() < math.pow(10, -6) ||
             evalResult.abs() >= math.pow(10, 21));
         String formattedResult = _formatNumber(evalResult);
-        if (isLong) {
+        if (isLong && evalResult != 0) {
           formattedResult = evalResult.toStringAsExponential();
         }
         state.result = formattedResult;
@@ -402,8 +402,8 @@ class CalculatorNotifier extends Notifier<Calculator> {
 
   void _addToHistory(String expresion, String resultado) {
     ref
-        .read(historialProvider.notifier)
-        .add(Historial(input: expresion, result: resultado));
+        .read(ecuacionesProvider.notifier)
+        .add(Ecuacion(input: expresion, result: resultado));
     // This will be called by the UI to add to history provider
     // The UI will handle the actual history storage
   }

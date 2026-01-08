@@ -4,7 +4,7 @@
 
 Esta calculadora presenta un teclado con varios tipos de botones:
 
-- **Funciones** de (AC) limpiar todo, (C) limpiar ecuacion y resultado manteniendo historial, deshacer último carácter, copiar (copia al portapapeles y guarda en el Clipboard) y pegar (pega ecuacion desde el portapapeles).
+- **Funciones** de (AC: All Clear) limpia todo, (C: Clear) borra ecuación y resultado manteniendo historial, ('⌫') deshace último carácter escrito, (MS: Memory Store) almacena ecuación y resultado en memoria y copia al portapapeles del dispositivo y (MR: Memory Recall): recupera valor del portapapeles y lo pega como ecuacion para su cálculo (para recuperar un valor de la memoria, ir a la página Memoria).
 
 - **Operadores** para calcular porcentaje, módulo, cuadrado, exponente, raíz cuadrada, factorial, división, multiplicación, resta y suma.
 
@@ -12,7 +12,7 @@ Esta calculadora presenta un teclado con varios tipos de botones:
 
 - **Constantes**: *π* (pi), *e* (número de Euler o constante de Napier), *√²* (raíz cuadrada de 2 o constante pitagórica).
 
-También es posible **pegar una ecuación** desde el portapapeles. Además, desde el Clipboard se puede pegar directamente una ecuación guardada.
+También es posible **pegar una ecuación** desde el portapapeles. Además, desde Memoria se puede pegar directamente una ecuación guardada.
 
 ## Sugerencias, expresiones y ecuaciones
 
@@ -20,19 +20,21 @@ Según se ingresan datos, la calculadora va facilitando sugerencias para la corr
 
 Si la expresión introducida no se reconoce como válida, se avisará del error antes de intentar hacer los cálculos.
 
-Para calcular la raíz cuadrada, se requiere que el radicando esté entre paréntesis (también al pegar una ecuación desde el portapapeles), por lo que al escribir el operador √ se escribe automáticamente el primer paréntesis, y se recuerda no introducir un número negativo. Si después de introducir un número no se cierra el paréntesis se recordará que la expresión está incompleta.
+Ejemplo: Para calcular la raíz cuadrada, se requiere que el radicando esté entre paréntesis (también al pegar una ecuación desde el portapapeles), por lo que al escribir el operador √ se escribe automáticamente el primer paréntesis, y se recuerda no introducir un número negativo. Si después de introducir un número no se cierra el paréntesis se recordará que la expresión está incompleta.
 
-Ejemplo para calcular la raíz cuadrada de 49:
+Así, por ejemplo, para calcular la raíz cuadrada de 49:
 
-`√(49) = 7`
+> √(49) = 7
 
 Ejemplo para calcular el 50% de 30:
 
-`50％30 = 15` (en pantalla aparecerá `50 / 100 * 30`)
+> 50％30 = 15
+> en pantalla se traduce como
+> 50/100*30
 
 Los exponentes negativos deben encerrarse entre paréntesis:
 
-`2^(-3) = 0.125`
+> 2^(-3) = 0.125
 
 # Salida de datos
 
@@ -41,7 +43,7 @@ Los exponentes negativos deben encerrarse entre paréntesis:
 La pantalla de salida muestra, de arriba a abajo:
 
 - El **resultado** calculado o, en su caso, un aviso de error.
-- El **historial** de ecuaciones utilizadas en la actual sesión (si lo hay).
+- El **historial** de ecuaciones utilizadas en la actual sesión (si lo hay). Se pierde cuando se cierra la aplicación.
 - La expresión o ecuación introducida (tecleada o pegada).
 - La **previsualización** del resultado o, en su caso, una **sugerencia** o un aviso de error (desaparece cuando se obtiene el resultado).
 
@@ -63,7 +65,7 @@ Las cantidades muy grandes (valores absolutos iguales o mayores que 10²¹) o mu
 
 La notación e, donde la letra e seguida de un número representa, literalmente, «multiplicado por diez elevado a» (es decir, × 10ⁿ).
 
-Dicho de otro modo, si tomamos dos números reales # y n, la representación #en significaría exactamente `# × 10ⁿ`.  Así, por ejemplo, 0.0000001 se escribe 1e-7 o el número de Avogadro (602214076000000000000000, seiscientos dos mil doscientos catorce trillones setenta y seis mil billones) se escribe 6.02214076e+23.
+Dicho de otro modo, si tomamos dos números reales # y n, la representación #en significaría exactamente # × 10ⁿ.  Así, por ejemplo, 0.0000001 se escribe 1e-7 o el número de Avogadro (602214076000000000000000, seiscientos dos mil doscientos catorce trillones setenta y seis mil billones) se escribe 6.02214076e+23.
 
 ## Secuencia de operadores. Jerarquía detallada
 
@@ -77,6 +79,22 @@ Dicho de otro modo, si tomamos dos números reales # y n, la representación #en
 
 Es importante conocer y aplicar correctamente la jerarquía de operaciones para obtener un resultado correcto. Por ejemplo:
 
-`5+3x4 = 8x4 = 32` Incorrecto, no se respetó la jerarquía.
+> 5+3x4 = 8x4 = 32  Incorrecto, no se respetó la jerarquía.
+> Correcto: 5+3x4 = 5+12 = 17
 
-Correcto: `5+3x4 = 5+12 = 17`
+# Memoria
+
+La calculadora dispone de una Memoria avanzada que muestra las ecuaciones que han sido almacenadas desde la página principal de la Calculadora con la tecla MS (Memory Store).
+
+Esta Memoria es útil no solo para almacenar expresiones y su resultado, también como memoria de los números que interesa guardar para recuperar después y operar con ellos.  
+
+Las acciones que ofrece Memoria son:
+
+- *CC* (Copiar): Copia la ecuacion y el resultado en el portapapeles del dispositivo.
+
+- *MR* (Memory Recall): Recupera la ecuacion, la escribe en la Calculadora y calcula su resultado. Vuelve a la calculadora.
+
+- *MC* (Memory Clear): Borra de la memoria la ecuación seleccionada.
+
+- *MAC* (Memory All Clear): Vacía toda la memoria.
+

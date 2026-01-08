@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:flutter_md/flutter_md.dart';
+import 'package:markdown_widget/markdown_widget.dart';
 
 class HelpScreen extends StatefulWidget {
   const HelpScreen({super.key});
@@ -10,12 +10,19 @@ class HelpScreen extends StatefulWidget {
 }
 
 class _HelpScreenState extends State<HelpScreen> {
-  Markdown markdown = Markdown.fromString('');
+  String data = '';
+  final tocController = TocController();
 
   @override
   void initState() {
     loadFileAsset();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    tocController.dispose();
+    super.dispose();
   }
 
   Future<void> loadFileAsset() async {
@@ -27,7 +34,7 @@ class _HelpScreenState extends State<HelpScreen> {
       textFile = 'Failed to load asset';
     } finally {
       setState(() {
-        markdown = Markdown.fromString(textFile);
+        data = textFile;
       });
     }
   }
@@ -36,24 +43,53 @@ class _HelpScreenState extends State<HelpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Ayuda')),
+      endDrawer: Drawer(
+        child: TocWidget(
+          controller: tocController,
+          //physics: NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          //itemBuilder: (TocItemBuilderData item) {},
+          //tocTextStyle: TextStyle(fontSize: 12),
+        ),
+      ),
       body: SafeArea(
         child: Container(
-          height: double.infinity,
-          width: double.infinity,
+          //height: double.infinity,
+          //width: double.infinity,
           color: Color(0xff292D36),
           padding: .all(20),
-          child: SingleChildScrollView(
-            child: MarkdownTheme(
-              data: MarkdownThemeData(
-                textStyle: TextStyle(fontSize: 20.0, color: Colors.white),
-                h2Style: TextStyle(
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue,
+          //single scroll
+          child: Column(
+            children: [
+              Expanded(
+                child: MarkdownWidget(
+                  data: data,
+                  tocController: tocController,
+                  shrinkWrap: true,
+                  /*markdownGenerator: MarkdownGenerator(
+                    richTextBuilder: (span) => Text.rich(span),
+                  ),*/
+                  config: MarkdownConfig(
+                    configs: [
+                      ListConfig(marginBottom: 0),
+                      H2Config(
+                        style: TextStyle(
+                          color: Colors.blueAccent,
+                          fontSize: 22,
+                        ),
+                      ),
+                      //PConfig(textStyle: TextStyle(fontSize: 16)),
+                      //CodeConfig(style: TextStyle(backgroundColor: Colors.black45),),
+                      BlockquoteConfig(textColor: Colors.white54),
+                      /*PreConfig(
+                        decoration: BoxDecoration(color: Colors.white54),
+                        textStyle: TextStyle(fontSize: 8, color: Colors.black),
+                      ),*/
+                    ],
+                  ),
                 ),
               ),
-              child: MarkdownWidget(markdown: markdown),
-            ),
+            ],
           ),
         ),
       ),

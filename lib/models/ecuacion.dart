@@ -1,10 +1,10 @@
-class Historial {
+class Ecuacion {
   final String input;
   final dynamic result;
 
-  const Historial({required this.input, required this.result});
+  const Ecuacion({required this.input, required this.result});
 
-  Historial.fromJson(Map<String, dynamic> json)
+  Ecuacion.fromJson(Map<String, dynamic> json)
     : input = json['i'],
       result = json['r'];
 
@@ -13,8 +13,8 @@ class Historial {
   }
 
   // Create a copyWith method for immutability
-  Historial copyWith({String? input, dynamic result}) {
-    return Historial(input: input ?? this.input, result: result ?? this.result);
+  Ecuacion copyWith({String? input, dynamic result}) {
+    return Ecuacion(input: input ?? this.input, result: result ?? this.result);
   }
 
   @override
