@@ -281,7 +281,7 @@ class _MemoriaScreenState extends ConsumerState<MemoriaScreen> {
                       String resultado = item.result;
                       String ecuacion = item.input;
                       return ListTile(
-                        contentPadding: .all(14),
+                        //contentPadding: .all(4),
                         titleAlignment: ListTileTitleAlignment.top,
                         selected: index == indexSelected,
                         leading: CircleAvatar(

@@ -44,7 +44,7 @@ class CalculatorDisplay extends ConsumerWidget {
           (history.isNotEmpty)
               ? Expanded(child: const DisplayHistory())
               : const Spacer(),
-          if (calculator.preview.isEmpty)
+          if (!(calculator.preview.isNotEmpty && calculator.result.isEmpty))
             Opacity(
               opacity: 0,
               child: Padding(
@@ -57,11 +57,16 @@ class CalculatorDisplay extends ConsumerWidget {
             ),
           Padding(
             padding: .symmetric(horizontal: 10),
-            child: Text(
+            /*child: Text(
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              calculator.expression,
+              //calculator.expression,
+              textPreview(),
               style: TextStyle(fontSize: 24.0, fontFamily: 'ShareTechMono'),
+            ),*/
+            child: PreviewDisplay(
+              exp: calculator.expression,
+              cursorPosition: calculator.cursorPosition,
             ),
           ),
           if (calculator.preview.isNotEmpty && calculator.result.isEmpty)
@@ -73,6 +78,44 @@ class CalculatorDisplay extends ConsumerWidget {
                 style: TextStyle(fontSize: 18.0, color: Colors.white54),
               ),
             ),
+        ],
+      ),
+    );
+  }
+}
+
+class PreviewDisplay extends StatelessWidget {
+  final String exp;
+  final int cursorPosition;
+
+  const PreviewDisplay({
+    super.key,
+    required this.exp,
+    required this.cursorPosition,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final String output1 = exp.substring(0, cursorPosition);
+    final String output2 = exp.substring(cursorPosition);
+    const String cursor = '|';
+
+    return RichText(
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
+      text: TextSpan(
+        style: TextStyle(fontSize: 24.0, fontFamily: 'ShareTechMono'),
+        children: [
+          TextSpan(text: output1),
+          TextSpan(
+            text: cursor,
+            style: TextStyle(
+              fontWeight: FontWeight.w200,
+              fontFamily: 'ShareTechMono',
+              color: Colors.white38,
+            ),
+          ),
+          TextSpan(text: output2),
         ],
       ),
     );

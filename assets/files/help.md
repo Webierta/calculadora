@@ -4,17 +4,22 @@
 
 Esta calculadora presenta un teclado con varios tipos de botones:
 
-- **Funciones** de (AC: All Clear) limpia todo, (C: Clear) borra ecuación y resultado manteniendo historial, ('⌫') deshace último carácter escrito, (MS: Memory Store) almacena ecuación y resultado en memoria y copia al portapapeles del dispositivo y (MR: Memory Recall): recupera valor del portapapeles y lo pega como ecuacion para su cálculo (para recuperar un valor de la memoria, ir a la página Memoria).
+- **Funciones**:
+  - AC (All Clear): Borra todo.
+  - C (Clear): Borra ecuación (expresión y resultado) manteniendo historial.
+  - ⌫: Deshace último carácter escrito.
+  - MS (Memory Store): Almacena la ecuación en memoria y la copia al portapapeles del dispositivo.
+  - MR (Memory Recall): Inserta valor del portapapeles como expresión para su cálculo (para recuperar un valor de la memoria, ir a la página Memoria).
 
 - **Operadores** para calcular porcentaje, módulo, cuadrado, exponente, raíz cuadrada, factorial, división, multiplicación, resta y suma.
 
-- **Números y caracteres** (decimal, parentesis y llaves).
+- **Números**, **caracteres** (decimal y paréntesis) y **desplazamiento del cursor** (↤ izquierda y ↦ derecha).
 
 - **Constantes**: *π* (pi), *e* (número de Euler o constante de Napier), *√²* (raíz cuadrada de 2 o constante pitagórica).
 
 También es posible **pegar una ecuación** desde el portapapeles. Además, desde Memoria se puede pegar directamente una ecuación guardada.
 
-## Sugerencias, expresiones y ecuaciones
+## Expresiones
 
 Según se ingresan datos, la calculadora va facilitando sugerencias para la correcta expresión de la ecuación. Por ejemplo, después de introducir un operador normalmente se sugiere introducir otro número.
 
@@ -67,9 +72,11 @@ La notación e, donde la letra e seguida de un número representa, literalmente,
 
 Dicho de otro modo, si tomamos dos números reales # y n, la representación #en significaría exactamente # × 10ⁿ.  Así, por ejemplo, 0.0000001 se escribe 1e-7 o el número de Avogadro (602214076000000000000000, seiscientos dos mil doscientos catorce trillones setenta y seis mil billones) se escribe 6.02214076e+23.
 
-## Secuencia de operadores. Jerarquía detallada
+## Secuencia de operadores
 
-1. Paréntesis y Signos de Agrupación (paréntesis, llaves): Resuelve primero lo que esté dentro de ellos.
+Jerarquía detallada:
+
+1. Signos de Agrupación (paréntesis): Resuelve primero lo que esté dentro de ellos.
 
 2. Exponentes y Raíces: Calcula potencias y raíces.
 
@@ -97,4 +104,3 @@ Las acciones que ofrece Memoria son:
 - *MC* (Memory Clear): Borra de la memoria la ecuación seleccionada.
 
 - *MAC* (Memory All Clear): Vacía toda la memoria.
-

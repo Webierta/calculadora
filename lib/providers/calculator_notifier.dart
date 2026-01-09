@@ -109,10 +109,27 @@ class CalculatorNotifier extends Notifier<Calculator> {
       return;
     }
 
-    /*if (input == '=') {
-      calculate();
+    if (input == '↤') {
+      if (state.expression.isNotEmpty && state.cursorPosition > 0) {
+        moveCursorLeft();
+      }
+      _updatePreview();
       return;
-    }*/
+    }
+
+    if (input == '↦') {
+      if (state.expression.isNotEmpty) {
+        moveCursorRight();
+      }
+      _updatePreview();
+      return;
+    }
+
+    if (input == '=') {
+      calculate();
+      resetCursorPosition();
+      return;
+    }
 
     updateResult('');
     _updatePreview();
@@ -150,8 +167,13 @@ class CalculatorNotifier extends Notifier<Calculator> {
     _updatePreview();
   }
 
-  /*void setCursorPosition(int position) {
+  void setCursorPosition(int position) {
     state.cursorPosition = position.clamp(0, state.expression.length);
+    copyWith(newCursorPosition: state.cursorPosition);
+  }
+
+  void resetCursorPosition() {
+    state.cursorPosition = state.expression.length;
     copyWith(newCursorPosition: state.cursorPosition);
   }
 
@@ -167,7 +189,7 @@ class CalculatorNotifier extends Notifier<Calculator> {
       state.cursorPosition++;
       copyWith(newCursorPosition: state.cursorPosition);
     }
-  }*/
+  }
 
   void _updatePreview() {
     if (state.expression.isEmpty) {

@@ -5,13 +5,13 @@ import 'key_tipo.dart';
 class KeyButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String label;
-  final KeyTipo? tipo;
+  final KeyTipo tipo;
 
   const KeyButton({
     super.key,
     required this.onPressed,
     required this.label,
-    this.tipo,
+    required this.tipo,
   });
 
   @override
@@ -27,7 +27,7 @@ class KeyButton extends StatelessWidget {
             ),
             backgroundColor: label == '='
                 ? Color(0xffE78388)
-                : tipo?.backgroundColor,
+                : tipo.backgroundColor,
           ),
           onPressed: onPressed,
           child: FittedBox(
@@ -35,7 +35,7 @@ class KeyButton extends StatelessWidget {
               label,
               style: TextStyle(
                 fontSize: label == '=' ? 42 : 24,
-                color: label == '=' ? Colors.white : tipo?.textColor,
+                color: label == '=' ? Colors.white : tipo.textColor,
               ),
             ),
           ),
@@ -43,49 +43,4 @@ class KeyButton extends StatelessWidget {
       ),
     );
   }
-}
-
-class KeyButtonNumber extends KeyButton {
-  const KeyButtonNumber({
-    super.key,
-    required super.onPressed,
-    required super.label,
-    super.tipo = KeyTipo.number,
-  });
-}
-
-class KeyButtonOperator extends KeyButton {
-  const KeyButtonOperator({
-    super.key,
-    required super.onPressed,
-    required super.label,
-    super.tipo = KeyTipo.operator,
-  });
-}
-
-class KeyButtonFuncion extends KeyButton {
-  const KeyButtonFuncion({
-    super.key,
-    required super.onPressed,
-    required super.label,
-    super.tipo = KeyTipo.funcion,
-  });
-}
-
-class KeyButtonCaracter extends KeyButton {
-  const KeyButtonCaracter({
-    super.key,
-    required super.onPressed,
-    required super.label,
-    super.tipo = KeyTipo.caracter,
-  });
-}
-
-class KeyButtonConstante extends KeyButton {
-  const KeyButtonConstante({
-    super.key,
-    required super.onPressed,
-    required super.label,
-    super.tipo = KeyTipo.constante,
-  });
 }
