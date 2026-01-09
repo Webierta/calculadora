@@ -553,7 +553,7 @@ class CalculatorNotifier extends Notifier<Calculator> {
     }
   }
 
-  void pasteFromClipboard(String ecuacion) {
+  /*void pasteFromClipboard(String ecuacion) {
     try {
       copyWith(
         newResult: '',
@@ -567,6 +567,22 @@ class CalculatorNotifier extends Notifier<Calculator> {
       }
       clear();
     }
+  }*/
+
+  void pasteToExpression(String paste) {
+    //String newExpresion = state.expression + paste;
+    String expresion = state.expression;
+    int cursorPosition = state.cursorPosition;
+    final String leftPaste = expresion.substring(0, cursorPosition);
+    final String rightPaste = expresion.substring(cursorPosition);
+    String newExpresion = leftPaste + paste + rightPaste;
+
+    copyWith(
+      newExpression: newExpresion,
+      newCursorPosition: newExpresion.length,
+      newPreview: '',
+    );
+    _updatePreview();
   }
 
   bool _isNumeric(String? s) {

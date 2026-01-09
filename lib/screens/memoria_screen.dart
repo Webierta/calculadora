@@ -49,49 +49,41 @@ class _MemoriaScreenState extends ConsumerState<MemoriaScreen> {
               ),
               const SizedBox(height: 10),
               ListTile(
-                titleAlignment: ListTileTitleAlignment.top,
-                leading: TextButton.icon(
-                  onPressed: () {},
-                  icon: Icon(Icons.copy),
-                  label: Text('CC'),
-                ),
+                leading: Column(children: [Icon(Icons.copy), Text('CC')]),
                 title: Text('Copiar'),
-                subtitle: Text('Copia ecuacion y resultado al portapapeles.'),
+                subtitle: Text(
+                  'Copia la ecuacion (expresión y resultado) en el portapapeles del dispositivo.',
+                  style: TextStyle(fontSize: 14),
+                ),
               ),
               const Divider(),
               ListTile(
-                titleAlignment: ListTileTitleAlignment.top,
-                leading: TextButton.icon(
-                  onPressed: () {},
-                  icon: Icon(Icons.paste),
-                  label: Text('MR'),
-                ),
+                leading: Column(children: [Icon(Icons.paste), Text('MR')]),
                 title: Text('Memory Recall'),
                 subtitle: Text(
-                  'Recupera ecuacion y la calcula. Vuelve a la calculadora.',
+                  'Recupera la expresión almacenada y la inserta en el campo de expresión, en el punto actual del cursor. Vuelve a la calculadora.',
+                  style: TextStyle(fontSize: 14),
                 ),
               ),
               const Divider(),
               ListTile(
-                titleAlignment: ListTileTitleAlignment.top,
-                leading: TextButton.icon(
-                  icon: Icon(Icons.delete),
-                  label: const Text('MC'),
-                  onPressed: () {},
-                ),
+                leading: Column(children: [Icon(Icons.delete), Text('MC')]),
                 title: Text('Memory Clear'),
-                subtitle: Text('Elimina ecuación seleccionada de la memoria.'),
+                subtitle: Text(
+                  'Borra de la memoria la ecuación seleccionada.',
+                  style: TextStyle(fontSize: 14),
+                ),
               ),
               const Divider(),
               ListTile(
-                titleAlignment: ListTileTitleAlignment.top,
-                leading: TextButton.icon(
-                  icon: Icon(Icons.delete_forever),
-                  label: const Text('MAC'),
-                  onPressed: () {},
+                leading: Column(
+                  children: [Icon(Icons.delete_forever), Text('MAC')],
                 ),
                 title: Text('Memory All Clear'),
-                subtitle: Text('Vacía toda la memoria.'),
+                subtitle: Text(
+                  'Vacía toda la memoria.',
+                  style: TextStyle(fontSize: 14),
+                ),
               ),
               const SizedBox(height: 20),
               Align(
@@ -150,7 +142,8 @@ class _MemoriaScreenState extends ConsumerState<MemoriaScreen> {
       Ecuacion ec = memory[indexSelected!];
       String ecuacion = ec.input;
       //ref.read(calculatorProvider.notifier).pasteFromClipboard(ecuacion);
-      calculatorNotifier.pasteFromClipboard(ecuacion);
+      //calculatorNotifier.pasteFromClipboard(ecuacion);
+      calculatorNotifier.pasteToExpression(ecuacion);
       ScaffoldMessenger.of(context).removeCurrentSnackBar();
       Navigator.of(context).pop();
     } catch (e) {
@@ -282,7 +275,7 @@ class _MemoriaScreenState extends ConsumerState<MemoriaScreen> {
                       String ecuacion = item.input;
                       return ListTile(
                         //contentPadding: .all(4),
-                        titleAlignment: ListTileTitleAlignment.top,
+                        //titleAlignment: ListTileTitleAlignment.top,
                         selected: index == indexSelected,
                         leading: CircleAvatar(
                           backgroundColor: index == indexSelected

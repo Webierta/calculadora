@@ -90,8 +90,9 @@ class CalculatorKeyboard extends ConsumerWidget {
         if (ref.read(calculatorProvider.notifier).isEq(item) == false) {
           throw Error();
         }
-        ref.read(calculatorProvider.notifier).updateExpresion(item);
-        ref.read(calculatorProvider.notifier).updateCursor(item.length);
+        //ref.read(calculatorProvider.notifier).updateExpresion(item);
+        ref.read(calculatorProvider.notifier).pasteToExpression(item);
+        //ref.read(calculatorProvider.notifier).updateCursor(item.length);
       } catch (e) {
         if (context.mounted) {
           ScaffoldMessenger.of(context).removeCurrentSnackBar();

@@ -5,19 +5,19 @@
 Esta calculadora presenta un teclado con varios tipos de botones:
 
 - **Funciones**:
-  - AC (All Clear): Borra todo.
+  - AC (All Clear): Limpia toda la pantalla.
   - C (Clear): Borra ecuación (expresión y resultado) manteniendo historial.
   - ⌫: Deshace último carácter escrito.
-  - MS (Memory Store): Almacena la ecuación en memoria y la copia al portapapeles del dispositivo.
-  - MR (Memory Recall): Inserta valor del portapapeles como expresión para su cálculo (para recuperar un valor de la memoria, ir a la página Memoria).
+  - MS (Memory Store): Almacena la ecuación en memoria y copia la expresión al portapapeles del dispositivo.
+  - MR (Memory Recall): Añade el valor del portapapeles al campo de la expresión, en el lugar actual del cursor, por defecto al final.
 
 - **Operadores** para calcular porcentaje, módulo, cuadrado, exponente, raíz cuadrada, factorial, división, multiplicación, resta y suma.
 
-- **Números**, **caracteres** (decimal y paréntesis) y **desplazamiento del cursor** (↤ izquierda y ↦ derecha).
+- **Números**, **caracteres** (decimal y paréntesis) y **desplazamiento del cursor** (↤ izquierda y ↦ derecha). La posición del cursor indica el lugar de entrada del teclado y de los valores pegados del portapapeles y recuperados de la Memoria. 
 
 - **Constantes**: *π* (pi), *e* (número de Euler o constante de Napier), *√²* (raíz cuadrada de 2 o constante pitagórica).
 
-También es posible **pegar una ecuación** desde el portapapeles. Además, desde Memoria se puede pegar directamente una ecuación guardada.
+Además del teclado, se puede insertar directamente una expresión o un valor desde el portapapeles del dispositivo o desde la Memoria de la Calculadora.
 
 ## Expresiones
 
@@ -97,9 +97,9 @@ Esta Memoria es útil no solo para almacenar expresiones y su resultado, tambié
 
 Las acciones que ofrece Memoria son:
 
-- *CC* (Copiar): Copia la ecuacion y el resultado en el portapapeles del dispositivo.
+- *CC* (Copiar): Copia la ecuacion (expresión y resultado) en el portapapeles del dispositivo.
 
-- *MR* (Memory Recall): Recupera la ecuacion, la escribe en la Calculadora y calcula su resultado. Vuelve a la calculadora.
+- *MR* (Memory Recall): Recupera la expresión almacenada y la inserta en el campo de expresión, en el punto actual del cursor. Vuelve a la calculadora.
 
 - *MC* (Memory Clear): Borra de la memoria la ecuación seleccionada.
 

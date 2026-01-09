@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/calculator_notifier.dart';
 import '../../providers/ecuaciones_notifier.dart';
 import 'display_history.dart';
+import 'display_preview2.dart';
 
 class CalculatorDisplay extends ConsumerWidget {
   const CalculatorDisplay({super.key});
@@ -55,20 +56,8 @@ class CalculatorDisplay extends ConsumerWidget {
                 ),
               ),
             ),
-          Padding(
-            padding: .symmetric(horizontal: 10),
-            /*child: Text(
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              //calculator.expression,
-              textPreview(),
-              style: TextStyle(fontSize: 24.0, fontFamily: 'ShareTechMono'),
-            ),*/
-            child: PreviewDisplay(
-              exp: calculator.expression,
-              cursorPosition: calculator.cursorPosition,
-            ),
-          ),
+          //DisplayPreview(),
+          DisplayPreview2(),
           if (calculator.preview.isNotEmpty && calculator.result.isEmpty)
             Padding(
               padding: .symmetric(horizontal: 10),
@@ -78,44 +67,6 @@ class CalculatorDisplay extends ConsumerWidget {
                 style: TextStyle(fontSize: 18.0, color: Colors.white54),
               ),
             ),
-        ],
-      ),
-    );
-  }
-}
-
-class PreviewDisplay extends StatelessWidget {
-  final String exp;
-  final int cursorPosition;
-
-  const PreviewDisplay({
-    super.key,
-    required this.exp,
-    required this.cursorPosition,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final String output1 = exp.substring(0, cursorPosition);
-    final String output2 = exp.substring(cursorPosition);
-    const String cursor = '|';
-
-    return RichText(
-      maxLines: 2,
-      overflow: TextOverflow.ellipsis,
-      text: TextSpan(
-        style: TextStyle(fontSize: 24.0, fontFamily: 'ShareTechMono'),
-        children: [
-          TextSpan(text: output1),
-          TextSpan(
-            text: cursor,
-            style: TextStyle(
-              fontWeight: FontWeight.w200,
-              fontFamily: 'ShareTechMono',
-              color: Colors.white38,
-            ),
-          ),
-          TextSpan(text: output2),
         ],
       ),
     );
