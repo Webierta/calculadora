@@ -1,7 +1,7 @@
 name: calculadora
 description: "Calculadora simple para operaciones aritméticas"
 publish_to: 'none'
-version: 1.2.4+11
+version: 1.2.5+12
 
 environment:
   sdk: ^3.10.4

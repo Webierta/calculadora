@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/calculator_notifier.dart';
 import '../../providers/ecuaciones_notifier.dart';
 import 'display_history.dart';
-import 'display_preview2.dart';
+import 'display_preview.dart';
 
 class CalculatorDisplay extends ConsumerWidget {
   const CalculatorDisplay({super.key});
@@ -56,8 +56,7 @@ class CalculatorDisplay extends ConsumerWidget {
                 ),
               ),
             ),
-          //DisplayPreview(),
-          DisplayPreview2(),
+          DisplayPreview(),
           if (calculator.preview.isNotEmpty && calculator.result.isEmpty)
             Padding(
               padding: .symmetric(horizontal: 10),

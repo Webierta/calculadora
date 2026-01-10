@@ -6,12 +6,14 @@ class KeyButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String label;
   final KeyTipo tipo;
+  final VoidCallback? onLongPress;
 
   const KeyButton({
     super.key,
     required this.onPressed,
     required this.label,
     required this.tipo,
+    this.onLongPress,
   });
 
   @override
@@ -30,6 +32,7 @@ class KeyButton extends StatelessWidget {
                 : tipo.backgroundColor,
           ),
           onPressed: onPressed,
+          onLongPress: onLongPress,
           child: FittedBox(
             child: Text(
               label,

@@ -167,10 +167,10 @@ class CalculatorNotifier extends Notifier<Calculator> {
     _updatePreview();
   }
 
-  void setCursorPosition(int position) {
+  /*void setCursorPosition(int position) {
     state.cursorPosition = position.clamp(0, state.expression.length);
     copyWith(newCursorPosition: state.cursorPosition);
-  }
+  }*/
 
   void resetCursorPosition() {
     state.cursorPosition = state.expression.length;
@@ -189,6 +189,26 @@ class CalculatorNotifier extends Notifier<Calculator> {
       state.cursorPosition++;
       copyWith(newCursorPosition: state.cursorPosition);
     }
+  }
+
+  void saltarCursorLeft() {
+    if (state.cursorPosition == 0) {
+      return;
+    }
+    state.cursorPosition = (state.cursorPosition >= 5)
+        ? state.cursorPosition -= 5
+        : 0;
+    copyWith(newCursorPosition: state.cursorPosition);
+  }
+
+  void saltarCursorRight() {
+    if (state.cursorPosition == state.expression.length) {
+      return;
+    }
+    state.cursorPosition = (state.expression.length - state.cursorPosition >= 5)
+        ? state.cursorPosition += 5
+        : state.expression.length;
+    copyWith(newCursorPosition: state.cursorPosition);
   }
 
   void _updatePreview() {

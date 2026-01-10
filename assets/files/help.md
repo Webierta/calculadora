@@ -5,15 +5,16 @@
 Esta calculadora presenta un teclado con varios tipos de botones:
 
 - **Funciones**:
-  - AC (All Clear): Limpia toda la pantalla.
-  - C (Clear): Borra ecuación (expresión y resultado) manteniendo historial.
-  - ⌫: Deshace último carácter escrito.
-  - MS (Memory Store): Almacena la ecuación en memoria y copia la expresión al portapapeles del dispositivo.
+
+  - AC (All Clear): Limpia toda la pantalla.  
+  - C (Clear): Borra ecuación (expresión y resultado) manteniendo historial.  
+  - ⌫: Deshace último carácter escrito.  
+  - MS (Memory Store): Almacena la ecuación en memoria y copia la expresión al portapapeles del dispositivo.  
   - MR (Memory Recall): Añade el valor del portapapeles al campo de la expresión, en el lugar actual del cursor, por defecto al final.
 
 - **Operadores** para calcular porcentaje, módulo, cuadrado, exponente, raíz cuadrada, factorial, división, multiplicación, resta y suma.
 
-- **Números**, **caracteres** (decimal y paréntesis) y **desplazamiento del cursor** (↤ izquierda y ↦ derecha). La posición del cursor indica el lugar de entrada del teclado y de los valores pegados del portapapeles y recuperados de la Memoria. 
+- **Números**, **caracteres** (decimal y paréntesis) y **desplazamiento del cursor** (↤ izquierda y ↦ derecha, y con pulsación prolongada a saltos de 5 posiciones). La posición del cursor indica el lugar de entrada del teclado y de los valores pegados desde el portapapeles y recuperados desde la Memoria. 
 
 - **Constantes**: *π* (pi), *e* (número de Euler o constante de Napier), *√²* (raíz cuadrada de 2 o constante pitagórica).
 
@@ -48,8 +49,11 @@ Los exponentes negativos deben encerrarse entre paréntesis:
 La pantalla de salida muestra, de arriba a abajo:
 
 - El **resultado** calculado o, en su caso, un aviso de error.
+
 - El **historial** de ecuaciones utilizadas en la actual sesión (si lo hay). Se pierde cuando se cierra la aplicación.
+
 - La expresión o ecuación introducida (tecleada o pegada).
+
 - La **previsualización** del resultado o, en su caso, una **sugerencia** o un aviso de error (desaparece cuando se obtiene el resultado).
 
 ## Formato

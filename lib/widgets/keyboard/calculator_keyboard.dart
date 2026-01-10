@@ -18,11 +18,26 @@ class CalculatorKeyboard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final calculator = ref.watch(calculatorProvider);
 
-    KeyButton keyButton(String label, KeyTipo tipo) => KeyButton(
-      onPressed: () => ref.read(calculatorProvider.notifier).addInput(label),
-      label: label,
-      tipo: tipo,
-    );
+    KeyButton keyButton(String label, KeyTipo tipo) {
+      VoidCallback? onLongPress;
+      if (label == '↦') {
+        onLongPress = () =>
+            ref.read(calculatorProvider.notifier).saltarCursorRight();
+      }
+      if (label == '↤') {
+        onLongPress = () =>
+            ref.read(calculatorProvider.notifier).saltarCursorLeft();
+      }
+      return KeyButton(
+        onPressed: () {
+          HapticFeedback.selectionClick();
+          ref.read(calculatorProvider.notifier).addInput(label);
+        },
+        onLongPress: onLongPress,
+        label: label,
+        tipo: tipo,
+      );
+    }
 
     void memoryStore() async {
       try {
