@@ -40,6 +40,7 @@ class CalculatorKeyboard extends ConsumerWidget {
     }
 
     void memoryStore() async {
+      HapticFeedback.selectionClick();
       try {
         if (calculator.result.isEmpty ||
             calculator.hasError == true ||
@@ -83,6 +84,7 @@ class CalculatorKeyboard extends ConsumerWidget {
     }
 
     void clipboardPaste() async {
+      HapticFeedback.selectionClick();
       try {
         ClipboardData? data = await Clipboard.getData('text/plain');
         if (data == null) {
